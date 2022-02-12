@@ -199,12 +199,13 @@ public class Synths extends JFrame implements ItemListener {
             buttonNext.setBounds(640, 360, 100, 40);
             buttonNext.setBorderPainted(true);
             buttonNext.setBackground(Color.orange);
+            buttonNext.setEnabled(true);
             container.add(buttonNext);
             buttonNext.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     DefineInstruments.buttonSynths.setText("Synths:" + ProjectData.synthStrips.size());
-                    DefineInstruments.numChannels.setText("All Channels:" + ProjectData.CommonChannels());
+                    DefineInstruments.numChannels.setText("All Channels:" + ProjectData.commonChannels());
                     terminateThisWindow();
                 }
 

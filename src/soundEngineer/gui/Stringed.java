@@ -568,7 +568,7 @@ public class Stringed extends JFrame implements ItemListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 DefineInstruments.buttonStrings.setText("Stringed:" + ProjectData.stringedStrips.size());
-                DefineInstruments.numChannels.setText("All Channels:" + ProjectData.CommonChannels());
+                DefineInstruments.numChannels.setText("All Channels:" + ProjectData.commonChannels());
                 terminateThisWindow();
             }
 

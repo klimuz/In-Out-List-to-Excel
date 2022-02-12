@@ -418,7 +418,7 @@ public class Guitars extends JFrame implements ItemListener {
                     }
                     buttonNext.setEnabled(true);
                     guitarChannels.setText("Guitar Channels: " + ProjectData.guitarStrips.size());
-                    System.out.println(ProjectData.guitarStrips);
+                    //System.out.println(ProjectData.guitarStrips);
                 }
             });
 //Button apply end
@@ -448,7 +448,7 @@ public class Guitars extends JFrame implements ItemListener {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     DefineInstruments.buttonGuitars.setText("Guitars:" + ProjectData.guitarStrips.size());
-                    DefineInstruments.numChannels.setText("All Channels:" + ProjectData.CommonChannels());
+                    DefineInstruments.numChannels.setText("All Channels:" + ProjectData.commonChannels());
                     terminateThisWindow();
                 }
             });

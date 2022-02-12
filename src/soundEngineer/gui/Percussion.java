@@ -17,7 +17,7 @@ public class Percussion extends JFrame implements ItemListener {
     private JButton buttonBack = new JButton("Back");
     private JButton buttonNext = new JButton("Next");
     private JButton buttonApply = new JButton("Apply");
-    private JLabel chooseOutputsLabel = new JLabel("Choose among percussion:");
+    private JLabel choosePercussionLabel = new JLabel("Choose among percussion:");
     private JLabel congasLabel = new JLabel("Congas");
     private JLabel bongosLabel = new JLabel("Bongos");
     private JLabel shakerLabel = new JLabel("Shaker");
@@ -98,9 +98,9 @@ public class Percussion extends JFrame implements ItemListener {
 //elements start
         Container container = this.getContentPane();
         container.setLayout(null);
-        chooseOutputsLabel.setFont(font);
-        chooseOutputsLabel.setBounds(245, 5, 300, 50);
-        container.add(chooseOutputsLabel);
+        choosePercussionLabel.setFont(font);
+        choosePercussionLabel.setBounds(245, 5, 300, 50);
+        container.add(choosePercussionLabel);
         genericsLabel.setFont(font);
         genericsLabel.setBounds(180, 55, 100, 50);
         container.add(genericsLabel);
@@ -486,7 +486,7 @@ public class Percussion extends JFrame implements ItemListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 DefineInstruments.buttonPercuss.setText("Percussion:" + ProjectData.percussionStrips.size());
-                DefineInstruments.numChannels.setText("All Channels:" + ProjectData.CommonChannels());
+                DefineInstruments.numChannels.setText("All Channels:" + ProjectData.commonChannels());
                 terminateThisWindow();
             }
 

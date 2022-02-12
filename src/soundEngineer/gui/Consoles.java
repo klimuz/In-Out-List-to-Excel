@@ -18,8 +18,7 @@ public class Consoles extends JFrame {
     private JButton buttonBack = new JButton ("Back");
     private JButton buttonNext = new JButton("Next");
     private JButton buttonCut32 = new JButton("Cut to 32");
-    private JButton buttonCut38 = new JButton("Cut to 38");
-    private JButton buttonCut56 = new JButton("Cut to 56");
+    private JButton buttonCut48 = new JButton("Cut to 48");
     private JButton buttonCut64 = new JButton("Cut to 64");
     private JLabel fohLabel = new JLabel("FOH");
     private JLabel monLabel = new JLabel("Mon");
@@ -50,11 +49,59 @@ public class Consoles extends JFrame {
     private JRadioButton digicoMon = new JRadioButton("Digico");
     private JRadioButton x32Mon = new JRadioButton("X32");
 
+    private void setFohName(){
+        //selectedFohConsole = "3";
+        switch (selectedFohConsole){
+            case "2":
+                ProjectData.fohConsoleName = "PM5D";
+                break;
+            case "3":
+                ProjectData.fohConsoleName = "iLive";
+                break;
+            case "4":
+                ProjectData.fohConsoleName = "CL5";
+                break;
+            case "5":
+                ProjectData.fohConsoleName = "Rivage";
+                break;
+            case "6":
+                ProjectData.fohConsoleName = "X32";
+                break;
+            case "7":
+                ProjectData.fohConsoleName = "Digico";
+                break;
+        }
+    }
+    private void setMonName(){
+        //mon
+        switch (selectedMonConsole){
+            case "2":
+                ProjectData.monConsoleName = "PM5D";
+                break;
+            case "3":
+                ProjectData.monConsoleName = "iLive";
+                break;
+            case "4":
+                ProjectData.monConsoleName = "CL5";
+                break;
+            case "5":
+                ProjectData.monConsoleName = "Rivage";
+                break;
+            case "6":
+                ProjectData.monConsoleName = "X32";
+                break;
+            case "7":
+                ProjectData.monConsoleName = "Digico";
+                break;
+        }
+    }
 
     public void terminateThisWindow(){
         this.dispose();
     }
 
+    private String selectedFohConsole;
+    private String selectedMonConsole;
     public Consoles() throws HeadlessException {
         super("In-Out List to Exel : " + ProjectData.projectName);
         this.setBounds(854, 480, 500, 300);
@@ -137,7 +184,7 @@ public class Consoles extends JFrame {
         inputsFieldLabel.setBackground(Color.black);
         inputsFieldLabel.setForeground(Color.yellow);
         inputsFieldLabel.setOpaque(true);
-        inputsFieldLabel.setText(ProjectData.CommonChannels().toString());
+        inputsFieldLabel.setText(ProjectData.commonChannels().toString());
         container.add(inputsFieldLabel);
 
         outFieldLabel.setBounds(680, 150,95, 100);
@@ -167,6 +214,27 @@ public class Consoles extends JFrame {
         fohGroup.add(x32);
         digico.setActionCommand("7");
         fohGroup.add(digico);
+        switch (ProjectData.inputStrips.get(0)){
+            case "PM5D":
+                pm5d.setSelected(true);
+                break;
+            case "iLive":
+                iLive.setSelected(true);
+                break;
+            case "CL5":
+                cl.setSelected(true);
+                break;
+            case "Rivage":
+                rivage.setSelected(true);
+                break;
+            case  "X32":
+                x32.setSelected(true);
+                break;
+            case "Digico":
+                digico.setSelected(true);
+                break;
+        }
+        selectedFohConsole = fohGroup.getSelection().toString();
 
         ButtonGroup monGroup = new ButtonGroup();
         noMon.setActionCommand("1");
@@ -183,16 +251,18 @@ public class Consoles extends JFrame {
         monGroup.add(x32Mon);
         digicoMon.setActionCommand("7");
         monGroup.add(digicoMon);
+        noMon.setSelected(true);
+        selectedMonConsole = monGroup.getSelection().toString();
 
 //cutting logic start
-        if (ProjectData.CommonChannels() > 38){  //38
+        if (ProjectData.inputStrips.size() > 32){  //38
           x32.setEnabled(false);
           x32Mon.setEnabled(false);
-          buttonCut38.setBackground(Color.red);
-          buttonCut38.setBounds(320, 263, 100, 25);
-          container.add(buttonCut38);
-          buttonCut38.setText("Cut to 38");
-          buttonCut38.addActionListener(new ActionListener() {
+          buttonCut32.setBackground(Color.red);
+          buttonCut32.setBounds(320, 263, 100, 25);
+          container.add(buttonCut32);
+          buttonCut32.setText("Cut to 32");
+          buttonCut32.addActionListener(new ActionListener() {
               @Override
               public void actionPerformed(ActionEvent e) {
 
@@ -200,20 +270,20 @@ public class Consoles extends JFrame {
           });
 
         }
-        if (ProjectData.CommonChannels() > 56){ //56
+        if (ProjectData.inputStrips.size() > 48){ //56
             pm5d.setEnabled(false);
             pm5dMon.setEnabled(false);
-            buttonCut56.setBackground(Color.red);
-            buttonCut56.setBounds(320, 135, 100, 25);
-            container.add(buttonCut56);
-            buttonCut56.setText("Cut to 56");
+            buttonCut48.setBackground(Color.red);
+            buttonCut48.setBounds(320, 135, 100, 25);
+            container.add(buttonCut48);
+            buttonCut48.setText("Cut to 48");
         }
 //cutting logic end
 
         fohContainer.add(fohLabel);
         fohContainer.add(noFoh);
         fohContainer.add(pm5d);
-        pm5d.setSelected(true);
+
         fohContainer.add(iLive);
         fohContainer.add(cl);
         fohContainer.add(rivage);
@@ -242,44 +312,7 @@ public class Consoles extends JFrame {
         buttonNext.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            String selectedConsole = fohGroup.getSelection().getActionCommand();
-            String consoleName = null;
 
-            switch (selectedConsole){
-                case "1":
-                    break;
-                case "2":
-                    consoleName = "PM5D";
-                    break;
-                case "3":
-                    consoleName = "iLive";
-                    break;
-                case "4":
-                    consoleName = "CL";
-                    break;
-                case "5":
-                    consoleName = "Rivage";
-                    break;
-                case "6":
-                    consoleName = "X32";
-                    break;
-                case "7":
-                    consoleName = "Digico";
-                    break;
-            }
-               /* GenericMixer genericMixer = new GenericMixer();
-            genericMixer.setMixerName(consoleName);
-            ProjectData.setInputCannelAttr();
-                genericMixer.populateInputs();
-               System.out.println(GenericMixer.inputStrips);
-                genericMixer.populateInputChannelList();
-                System.out.println(GenericMixer.inputCannelList);
-                Exel exel = new Exel();
-                try {
-                    exel.inputlistToExel();
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }*/
             }
         });
 //button next end
@@ -294,6 +327,9 @@ public class Consoles extends JFrame {
         buttonBack.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                //DefineInstruments defineInstruments = new DefineInstruments();
+                ProjectData.defineInstruments.setVisible(true);
+                //ProjectData.defineInstruments.revalidate();
                 terminateThisWindow();
 
             }

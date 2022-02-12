@@ -571,7 +571,7 @@ public class WoodsBrass extends JFrame implements ItemListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 DefineInstruments.buttonBrass.setText("Winds:" + ProjectData.windStrips.size());
-                DefineInstruments.numChannels.setText("All Channels:" + ProjectData.CommonChannels());
+                DefineInstruments.numChannels.setText("All Channels:" + ProjectData.commonChannels());
                 terminateThisWindow();
             }
 

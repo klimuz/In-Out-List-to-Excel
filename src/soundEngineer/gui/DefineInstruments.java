@@ -23,6 +23,10 @@ public class DefineInstruments extends JFrame{
     public static JButton buttonBrass =new JButton("Brass&Woods");
     public static JButton buttonVocals =new JButton("Vocals");
     public static JButton buttonOthers =new JButton("Others");
+    public static JButton buttonUzbek =new JButton("Uzbek");
+    public static JButton buttonGreek =new JButton("Greek");
+    public static JButton buttonAmer =new JButton("American");
+    public static JButton buttonWorld =new JButton("WorldWide");
     private JButton buttonBack =new JButton("Back");
     private JButton buttonCancel =new JButton("Cancel");
     private JButton buttonNext =new JButton("Next");
@@ -91,15 +95,15 @@ public class DefineInstruments extends JFrame{
         numChannels.setForeground(Color.yellow);
         container.add(numChannels);
         Container gridContainer = new Container();
-        gridContainer.setLayout(new GridLayout(2, 4, 10, 20));
-        gridContainer.setBounds(150, 100, 500, 150);
+        gridContainer.setLayout(new GridLayout(3, 4, 10, 10));
+        gridContainer.setBounds(150, 100, 500, 220);
         buttonDrums.setBackground(Color.green);
         gridContainer.add(buttonDrums);
         buttonDrums.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AcousticDrums acousticDrums = new AcousticDrums();
-                acousticDrums.setVisible(true);
+                //
+                ProjectData.acousticDrums.setVisible(true);
             }
         });
         buttonGuitars.setBackground(Color.green);
@@ -116,55 +120,63 @@ public class DefineInstruments extends JFrame{
         gridContainer.add(buttonVocals);
         buttonOthers.setBackground(Color.green);
         gridContainer.add(buttonOthers);
+        buttonUzbek.setBackground(Color.green);
+        gridContainer.add(buttonUzbek);
+        buttonGreek.setBackground(Color.green);
+        gridContainer.add(buttonGreek);
+        buttonAmer.setBackground(Color.green);
+        gridContainer.add(buttonAmer);
+        buttonWorld.setBackground(Color.green);
+        gridContainer.add(buttonWorld);
         container.add(gridContainer);
+
         buttonGuitars.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Guitars guitars = new Guitars();
-                guitars.setVisible(true);
+                ProjectData.guitars.setVisible(true);
             }
         });
         buttonSynths.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Synths synths = new Synths();
-                synths.setVisible(true);
+                ProjectData.synths.setVisible(true);
             }
 
         });
         buttonPercuss.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Percussion percussion = new Percussion();
-                percussion.setVisible(true);
+                ProjectData.percussion.setVisible(true);
             }
         });
         buttonStrings.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Stringed stringed = new Stringed();
-                stringed.setVisible(true);
+                ProjectData.stringed.setVisible(true);
             }
         });
         buttonBrass.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                WoodsBrass woodsBrass = new WoodsBrass();
-                woodsBrass.setVisible(true);
+                ProjectData.woodsBrass.setVisible(true);
             }
         });
         buttonVocals.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Vocals vocals = new Vocals();
-                vocals.setVisible(true);
+                ProjectData.vocals.setVisible(true);
             }
         });
         buttonOthers.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Others others = new Others();
-                others.setVisible(true);
+                ProjectData.others.setVisible(true);
+            }
+        });
+        buttonUzbek.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ProjectData.uzbek.setVisible(true);
             }
         });
 //elements end
@@ -197,8 +209,11 @@ public class DefineInstruments extends JFrame{
         buttonNext.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                ProjectData.populateInputs();
                 Consoles consoles = new Consoles();
                 consoles.setVisible(true);
+                System.out.println(ProjectData.inputStrips);
                 terminateThisWindow();
                 }
         });

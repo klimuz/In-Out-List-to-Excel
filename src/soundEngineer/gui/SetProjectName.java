@@ -63,8 +63,8 @@ public class SetProjectName extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 ProjectData.projectName = textField.getText();
-                DefineInstruments defineInstruments = new DefineInstruments();
-                defineInstruments.setVisible(true);
+                ProjectData.populateInputs();
+                ProjectData.defineInstruments.setVisible(true);
                 terminateThisWindow();
             }
         });

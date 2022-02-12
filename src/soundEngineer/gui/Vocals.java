@@ -372,7 +372,7 @@ public class Vocals extends JFrame implements ItemListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 DefineInstruments.buttonVocals.setText("Vocals:" + (ProjectData.leadVocStrips.size() + ProjectData.backVocStrips.size()));
-                DefineInstruments.numChannels.setText("All Channels:" + ProjectData.CommonChannels());
+                DefineInstruments.numChannels.setText("All Channels:" + ProjectData.commonChannels());
                 terminateThisWindow();
             }
 
