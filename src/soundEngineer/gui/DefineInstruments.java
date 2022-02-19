@@ -15,23 +15,24 @@ public class DefineInstruments extends JFrame{
     private JMenuBar jMenuBar = new JMenuBar();
     JMenu m1 = new JMenu("File");
     JMenu m2 = new JMenu("Help");
-    public static JButton buttonDrums =new JButton("Drums");
-    public static JButton buttonGuitars =new JButton("Guitars");
-    public static JButton buttonSynths =new JButton("Synths");
-    public static JButton buttonPercuss =new JButton("Percussion");
-    public static JButton buttonStrings =new JButton("Strings");
-    public static JButton buttonBrass =new JButton("Brass&Woods");
-    public static JButton buttonVocals =new JButton("Vocals");
-    public static JButton buttonOthers =new JButton("Others");
-    public static JButton buttonUzbek =new JButton("Uzbek");
-    public static JButton buttonGreek =new JButton("Greek");
-    public static JButton buttonAmer =new JButton("American");
-    public static JButton buttonWorld =new JButton("WorldWide");
-    private JButton buttonBack =new JButton("Back");
+    public static JButton buttonDrums =new JButton("Drums" + ProjectData.drumStrips.size());
+    public static JButton buttonGuitars =new JButton("Guitars" + ProjectData.guitarStrips.size());
+    public static JButton buttonSynths =new JButton("Synths" + ProjectData.synthStrips.size());
+    public static JButton buttonPercuss =new JButton("Percussion" + ProjectData.percussionStrips.size());
+    public static JButton buttonStrings =new JButton("Strings" + ProjectData.stringedStrips.size());
+    public static JButton buttonWinds =new JButton("Winds" + ProjectData.windStrips.size());
+    public static JButton buttonVocals =new JButton("Vocals" + ProjectData.vocalStrips.size());
+    public static JButton buttonOthers =new JButton("Others" + ProjectData.extraStrips.size());
+    public static JButton buttonUzbek =new JButton("Uzbek" + ProjectData.uzbekStrips.size());
+    public static JButton buttonMain =new JButton("Mains");
+    public static JButton buttonAux =new JButton("Aux");
+    public static JButton buttonWorld =new JButton("WorldWide" + ProjectData.worldWideStrips.size());
     private JButton buttonCancel =new JButton("Cancel");
     private JButton buttonNext =new JButton("Next");
+    private JButton buttonReset = new JButton("Reset");
     private JLabel define = new JLabel("Define instruments:");
-    public static JLabel numChannels = new JLabel("");
+    public static JLabel numChannels = new JLabel("All Channels:" + ProjectData.commonChannels());
+    public static JLabel omniChannels = new JLabel("Omni Channels:" + ProjectData.omniStrips.size());
     public void terminateThisWindow(){
         this.dispose();
     }
@@ -91,21 +92,18 @@ public class DefineInstruments extends JFrame{
         define.setBounds(250, 20, 300, 40);
         define.setForeground(Color.orange);
         container.add(define);
-        numChannels.setBounds(650, 5, 150, 25);
+        numChannels.setBounds(720, 5, 150, 25);
         numChannels.setForeground(Color.yellow);
         container.add(numChannels);
+        omniChannels.setBounds(720, 25, 150, 25);
+        omniChannels.setForeground(Color.yellow);
+        container.add(omniChannels);
         Container gridContainer = new Container();
         gridContainer.setLayout(new GridLayout(3, 4, 10, 10));
         gridContainer.setBounds(150, 100, 500, 220);
         buttonDrums.setBackground(Color.green);
         gridContainer.add(buttonDrums);
-        buttonDrums.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //
-                ProjectData.acousticDrums.setVisible(true);
-            }
-        });
+
         buttonGuitars.setBackground(Color.green);
         gridContainer.add(buttonGuitars);
         buttonSynths.setBackground(Color.green);
@@ -114,31 +112,40 @@ public class DefineInstruments extends JFrame{
         gridContainer.add(buttonPercuss);
         buttonStrings.setBackground(Color.green);
         gridContainer.add(buttonStrings);
-        buttonBrass.setBackground(Color.green);
-        gridContainer.add(buttonBrass);
+        buttonWinds.setBackground(Color.green);
+        gridContainer.add(buttonWinds);
         buttonVocals.setBackground(Color.green);
         gridContainer.add(buttonVocals);
         buttonOthers.setBackground(Color.green);
         gridContainer.add(buttonOthers);
         buttonUzbek.setBackground(Color.green);
         gridContainer.add(buttonUzbek);
-        buttonGreek.setBackground(Color.green);
-        gridContainer.add(buttonGreek);
-        buttonAmer.setBackground(Color.green);
-        gridContainer.add(buttonAmer);
         buttonWorld.setBackground(Color.green);
         gridContainer.add(buttonWorld);
+        buttonAux.setBackground(Color.green);
+        gridContainer.add(buttonAux);
+        buttonMain.setBackground(Color.green);
+        gridContainer.add(buttonMain);
         container.add(gridContainer);
 
+        buttonDrums.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ProjectData.acousticDrumsGUI = new AcousticDrumsGUI();
+                ProjectData.acousticDrumsGUI.setVisible(true);
+            }
+        });
         buttonGuitars.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ProjectData.guitars.setVisible(true);
+                ProjectData.guitarsGUI = new GuitarsGUI();
+                ProjectData.guitarsGUI.setVisible(true);
             }
         });
         buttonSynths.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                ProjectData.synths = new Synths();
                 ProjectData.synths.setVisible(true);
             }
 
@@ -146,40 +153,85 @@ public class DefineInstruments extends JFrame{
         buttonPercuss.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                ProjectData.percussion = new Percussion();
                 ProjectData.percussion.setVisible(true);
             }
         });
         buttonStrings.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                ProjectData.stringed = new Stringed();
                 ProjectData.stringed.setVisible(true);
             }
         });
-        buttonBrass.addActionListener(new ActionListener() {
+        buttonWinds.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                ProjectData.woodsBrass = new WoodsBrass();
                 ProjectData.woodsBrass.setVisible(true);
             }
         });
         buttonVocals.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                ProjectData.vocals = new Vocals();
                 ProjectData.vocals.setVisible(true);
             }
         });
         buttonOthers.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                ProjectData.others = new Others();
                 ProjectData.others.setVisible(true);
             }
         });
         buttonUzbek.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                ProjectData.uzbek = new Uzbek();
                 ProjectData.uzbek.setVisible(true);
             }
         });
+        buttonWorld.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ProjectData.worldWideGui = new WorldWideGui();
+                ProjectData.worldWideGui.setVisible(true);
+            }
+        });
 //elements end
+//button reset start
+        buttonReset.setBackground(Color.red);
+        buttonReset.setBounds(375, 360, 100, 40);
+        container.add(buttonReset);
+        buttonReset.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ProjectData.drumStrips.clear();
+                buttonDrums.setText("Drums" + ProjectData.drumStrips.size());
+                ProjectData.guitarStrips.clear();
+                buttonGuitars.setText("Guitars" + ProjectData.guitarStrips.size());
+                ProjectData.synthStrips.clear();
+                buttonSynths.setText("Synths" + ProjectData.synthStrips.size());
+                ProjectData.percussionStrips.clear();
+                buttonPercuss.setText("Percussion" + ProjectData.percussionStrips.size());
+                ProjectData.stringedStrips.clear();
+                buttonStrings.setText("Strings" + ProjectData.stringedStrips.size());
+                ProjectData.windStrips.clear();
+                buttonWinds.setText("Winds" + ProjectData.windStrips.size());
+                ProjectData.vocalStrips.clear();
+                buttonVocals.setText("Vocals" + ProjectData.vocalStrips.size());
+                ProjectData.extraStrips.clear();
+                buttonOthers.setText("Others" + ProjectData.extraStrips.size());
+                ProjectData.uzbekStrips.clear();
+                buttonUzbek.setText("Uzbek" + ProjectData.uzbekStrips.size());
+                ProjectData.worldWideStrips.clear();
+                buttonWorld.setText("WorldWide" + ProjectData.worldWideStrips.size());
+                numChannels.setText("All Channels:" + ProjectData.commonChannels());
+
+            }
+        });
+//button reset end
 
 //Button cancel start
         buttonCancel.setBounds(200, 360, 100, 40);

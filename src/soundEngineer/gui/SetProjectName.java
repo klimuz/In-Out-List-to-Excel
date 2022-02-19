@@ -17,7 +17,6 @@ public class SetProjectName extends JFrame {
     private JButton buttonNext = new JButton("Next");
     private JTextField textField = new JTextField();
     private JLabel typeName = new JLabel("Type Show Name:");
-    //private JLabel sceneLabel = new JLabel("Show:  " + ProjectData.projectName);
     private void terminateThisWindow(){
         this.dispose();
     }
@@ -52,6 +51,7 @@ public class SetProjectName extends JFrame {
         typeName.setBounds(350,120,150,30);
         container.add(typeName);
         textField.setBounds(350,180,150,30);
+        textField.setText("No Name");
         container.add(textField);
 
         //Button next start
@@ -63,6 +63,7 @@ public class SetProjectName extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 ProjectData.projectName = textField.getText();
+                ProjectData.createObjects();
                 ProjectData.populateInputs();
                 ProjectData.defineInstruments.setVisible(true);
                 terminateThisWindow();

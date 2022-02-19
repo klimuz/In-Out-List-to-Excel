@@ -2,109 +2,44 @@ package soundEngineer.gui;
 
 import soundEngineer.server.ProjectData;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import java.io.File;
-import java.io.IOException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class Synths extends JFrame implements ItemListener {
+public class Synths extends GUIStamp {
 
-        private JMenuBar jMenuBar = new JMenuBar();
-        JMenu m1 = new JMenu("File");
-        JMenu m2 = new JMenu("Help");
-        private JButton buttonBack = new JButton("Back");
-        private JButton buttonNext = new JButton("Next");
-        private JButton buttonApply = new JButton("Apply");
-        private JLabel chooseOutputsLabel = new JLabel("Choose outputs quantity:");
         private JLabel synth1Label = new JLabel("Synth1");
         private JLabel synth2Label = new JLabel("Synth2");
         private JLabel synth3Label = new JLabel("Synth3");
     private JComboBox<String> synt1Number = new JComboBox();
     private JComboBox<String> synt2Number = new JComboBox();
     private JComboBox<String> synt3Number = new JComboBox();
-      private JLabel synthChannels = new JLabel("");
-        public void terminateThisWindow(){
-            this.dispose();
-        }
-
-
 
         public Synths() throws HeadlessException {
-            super("In-Out List to Exel : " + ProjectData.projectName);
-            Font font = new Font("",Font.BOLD,20);
-            this.setIconImage(new ImageIcon("img/logo.png").getImage());
-            Toolkit toolkit = Toolkit.getDefaultToolkit();
-            Dimension dimension = toolkit.getScreenSize();
-            this.setBounds(dimension.width/2-350, dimension.height/2-250, 854, 480);
-            //this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            this.setResizable(false);
-
-            m1.add(new JMenuItem("Open", 'O'));
-            m1.add(new JMenuItem("Save", 'S'));
-            m1.add(new JMenuItem("Recent"));
-            m1.addSeparator();
-            JMenuItem exit =  m1.add(new JMenuItem("Exit"));
-            exit.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    int option = JOptionPane.showConfirmDialog(null,
-                            "Are you really want to quit?", "Confirm", JOptionPane.YES_NO_OPTION,
-                            JOptionPane.QUESTION_MESSAGE);
-                    if (option == JOptionPane.YES_OPTION) {
-                        System.exit(0);
-                    }
-                }
-            });
-            exit.setAccelerator(KeyStroke.getKeyStroke("ctrl E"));
-
-            m2.add(new JMenuItem("About"));
-            jMenuBar.add(m1);
-            jMenuBar.add(m2);
-            jMenuBar.setBackground(Color.green);
-            this.setJMenuBar(jMenuBar);
-            this.revalidate();
-
-//background image start
-            try {
-                Image backgroundImage = ImageIO.read(new File("img/synths.jpg"));
-                setContentPane(new JPanel(new BorderLayout()) {
-                    @Override public void paintComponent(Graphics g) {
-                        g.drawImage(backgroundImage, 0, 0, getWidth(),getHeight(), this);
-                    }
-                });
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-//background image end
-
+            super("img/synths.jpg");
+            pageNameLabel.setText("Select Synthesizers");
 //elements start
-            Container container = this.getContentPane();
-            container.setLayout(null);
-            chooseOutputsLabel.setFont(font);
-            chooseOutputsLabel.setBounds(300, 5, 300, 50);
-            container.add(chooseOutputsLabel);
-
+//labels
             synth1Label.setBounds(120, 50, 40, 50);
             container.add(synth1Label);
             synth2Label.setBounds(375, 50, 40, 50);
             container.add(synth2Label);
             synth3Label.setBounds(650, 50, 40, 50);
             container.add(synth3Label);
-
+//syn1
             synt1Number.addItemListener(this);
             synt1Number.addItem("Mono");
             synt1Number.addItem("Stereo");
             synt1Number.addItem("No one");
-            if (ProjectData.synthStrips.contains("Syn1")){
+            if (ProjectData.synthStrips.contains("Synt") || ProjectData.synthStrips.contains("Syn1")){
                 synt1Number.setSelectedItem("Mono");
             }else if (ProjectData.synthStrips.contains("Sy1L")){
                 synt1Number.setSelectedItem("Stereo");
             }else {synt1Number.setSelectedItem("No one");}
             synt1Number.setBounds(100, 250,80, 20);
             container.add(synt1Number);
-
+//syn2
             synt2Number.addItemListener(this);
             synt2Number.addItem("Mono");
             synt2Number.addItem("Stereo");
@@ -116,7 +51,7 @@ public class Synths extends JFrame implements ItemListener {
             }else {synt2Number.setSelectedItem("No one");}
             synt2Number.setBounds(355, 250,80, 20);
             container.add(synt2Number);
-
+//syn3
             synt3Number.addItemListener(this);
             synt3Number.addItem("Mono");
             synt3Number.addItem("Stereo");
@@ -128,28 +63,31 @@ public class Synths extends JFrame implements ItemListener {
             }else {synt3Number.setSelectedItem("No one");}
             synt3Number.setBounds(630, 250,80, 20);
             container.add(synt3Number);
-            synthChannels.setBounds(650, 5, 150, 25);//label
-            container.add(synthChannels);
 //elements end
 
 //Button apply start
-            buttonApply.setBounds(725, 240, 70, 60);
-            buttonApply.setBorderPainted(true);
-            buttonApply.setBackground(Color.green);
-            container.add(buttonApply);
             buttonApply.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     ProjectData.synthStrips.clear();
-
+//syn1
                     String syn1Sel = synt1Number.getSelectedItem().toString();
                     switch (syn1Sel) {
                         case "Mono":
-                            ProjectData.synthStrips.add("Syn1");
+                            if (synt2Number.getSelectedItem() == "No one"){
+                                ProjectData.synthStrips.add("Synt");
+                            }else {
+                                ProjectData.synthStrips.add("Syn1");
+                            }
                             break;
                         case "Stereo":
-                            ProjectData.synthStrips.add("Sy1L");
-                            ProjectData.synthStrips.add("Sy1R");
+                            if (synt2Number.getSelectedItem() == "No one"){
+                                ProjectData.synthStrips.add("SynL");
+                                ProjectData.synthStrips.add("SynR");
+                            }else {
+                                ProjectData.synthStrips.add("Sy1L");
+                                ProjectData.synthStrips.add("Sy1R");
+                            }
                             break;
 
                     }
@@ -173,66 +111,19 @@ public class Synths extends JFrame implements ItemListener {
                             ProjectData.synthStrips.add("Sy3R");
                             break;
                     }
-                    buttonNext.setEnabled(true);
-                    synthChannels.setText("Synth Channels: " + ProjectData.synthStrips.size());
+                    theseChannelsLabel.setText("These Channels: " + ProjectData.synthStrips.size());
+                    DefineInstruments.buttonSynths.setText("Synths" + ProjectData.synthStrips.size());
                 }
             });
 //Button apply end
-
-
-//Button back start
-            buttonBack.setBounds(100, 360, 100, 40);
-            buttonBack.setBorderPainted(true);
-            buttonBack.setBackground(Color.orange);
-            container.add(buttonBack);
-
-            buttonBack.addActionListener(new ActionListener() {
+//button no one
+            buttonNoOne.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    terminateThisWindow();
-
-                }
-            });
-//Button back end
-
-//Button next start
-            buttonNext.setBounds(640, 360, 100, 40);
-            buttonNext.setBorderPainted(true);
-            buttonNext.setBackground(Color.orange);
-            buttonNext.setEnabled(true);
-            container.add(buttonNext);
-            buttonNext.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    DefineInstruments.buttonSynths.setText("Synths:" + ProjectData.synthStrips.size());
-                    DefineInstruments.numChannels.setText("All Channels:" + ProjectData.commonChannels());
-                    terminateThisWindow();
-                }
-
-            });
-//Button next end
-
-
-
-            this.addWindowListener(new WindowAdapter() {
-                @Override
-                public void windowClosing(WindowEvent e) {
-                    super.windowClosing(e);
-                    int option = JOptionPane.showConfirmDialog(null,
-                            "Are you really want to quit?", "Confirm", JOptionPane.YES_NO_OPTION,
-                            JOptionPane.QUESTION_MESSAGE);
-                    if (option == JOptionPane.YES_OPTION) {
-                        System.exit(0);
-                    }else if (option == JOptionPane.NO_OPTION){
-                        Synths synths = new Synths();
-                        synths.setVisible(true);
-                    }
+                    synt1Number.setSelectedItem("No one");
+                    synt2Number.setSelectedItem("No one");
+                    synt3Number.setSelectedItem("No one");
                 }
             });
         }
-    @Override
-    public void itemStateChanged(ItemEvent e) {
-        buttonNext.setEnabled(false);
-    }
-
 }

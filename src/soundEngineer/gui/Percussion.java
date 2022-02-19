@@ -2,22 +2,13 @@ package soundEngineer.gui;
 
 import soundEngineer.server.ProjectData;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import java.io.File;
-import java.io.IOException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class Percussion extends JFrame implements ItemListener {
+public class Percussion extends GUIStamp {
 
-    private JMenuBar jMenuBar = new JMenuBar();
-    JMenu m1 = new JMenu("File");
-    JMenu m2 = new JMenu("Help");
-    private JButton buttonBack = new JButton("Back");
-    private JButton buttonNext = new JButton("Next");
-    private JButton buttonApply = new JButton("Apply");
-    private JLabel choosePercussionLabel = new JLabel("Choose among percussion:");
     private JLabel congasLabel = new JLabel("Congas");
     private JLabel bongosLabel = new JLabel("Bongos");
     private JLabel shakerLabel = new JLabel("Shaker");
@@ -31,354 +22,295 @@ public class Percussion extends JFrame implements ItemListener {
     private JLabel othersLabel = new JLabel("Others");
     private JLabel genericsLabel = new JLabel("Generic:");
     private JLabel nationalLabel = new JLabel("National:");
-    private JComboBox<String> congasNumber = new JComboBox();
-    private JComboBox<String> bongosNumber = new JComboBox();
-    private JComboBox<String> shakerNumber = new JComboBox();
-    private JComboBox<String> tambourineNumber = new JComboBox();
-    private JComboBox<String> overNumber = new JComboBox();
-    private JComboBox<String> doyraNumber = new JComboBox();
-    private JComboBox<String> tablaNumber = new JComboBox();
-    private JComboBox<String> nagoraNumber = new JComboBox();
-    private JComboBox<String> jambeyNumber = new JComboBox();
-    private JComboBox<String> othersNumber = new JComboBox();
-    private JLabel numChannels = new JLabel("");
-    public void terminateThisWindow(){
-        this.dispose();
-    }
 
-
+    private JComboBox<Integer> congasNumber = new JComboBox();
+    private JComboBox<Integer> bongosNumber = new JComboBox();
+    private JComboBox<Integer> shakerNumber = new JComboBox();
+    private JComboBox<Integer> tambourineNumber = new JComboBox();
+    private JComboBox<Integer> overNumber = new JComboBox();
+    private JComboBox<Integer> doyraNumber = new JComboBox();
+    private JComboBox<Integer> tablaNumber = new JComboBox();
+    private JComboBox<Integer> nagoraNumber = new JComboBox();
+    private JComboBox<Integer> jambeyNumber = new JComboBox();
+    private JComboBox<Integer> othersNumber = new JComboBox();
 
     public Percussion() throws HeadlessException {
-        super("In-Out List to Exel : " + ProjectData.projectName);
-        Font font = new Font("",Font.BOLD,20);
-        this.setIconImage(new ImageIcon("img/logo.png").getImage());
-        Toolkit toolkit = Toolkit.getDefaultToolkit();
-        Dimension dimension = toolkit.getScreenSize();
-        this.setBounds(dimension.width/2-350, dimension.height/2-250, 854, 480);
-        this.setResizable(false);
-
-        m1.add(new JMenuItem("Open", 'O'));
-        m1.add(new JMenuItem("Save", 'S'));
-        m1.add(new JMenuItem("Recent"));
-        m1.addSeparator();
-        JMenuItem exit =  m1.add(new JMenuItem("Exit"));
-        exit.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int option = JOptionPane.showConfirmDialog(null,
-                        "Are you really want to quit?", "Confirm", JOptionPane.YES_NO_OPTION,
-                        JOptionPane.QUESTION_MESSAGE);
-                if (option == JOptionPane.YES_OPTION) {
-                    System.exit(0);
-                }
-            }
-        });
-        exit.setAccelerator(KeyStroke.getKeyStroke("ctrl E"));
-
-        m2.add(new JMenuItem("About"));
-        jMenuBar.add(m1);
-        jMenuBar.add(m2);
-        jMenuBar.setBackground(Color.green);
-        this.setJMenuBar(jMenuBar);
-        this.revalidate();
-
-//background image start
-        try {
-            Image backgroundImage = ImageIO.read(new File("img/blueBgnd.jpg"));
-            setContentPane(new JPanel(new BorderLayout()) {
-                @Override public void paintComponent(Graphics g) {
-                    g.drawImage(backgroundImage, 0, 0, getWidth(),getHeight(), this);
-                }
-            });
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-//background image end
-
-//elements start
-        Container container = this.getContentPane();
-        container.setLayout(null);
-        choosePercussionLabel.setFont(font);
-        choosePercussionLabel.setBounds(245, 5, 300, 50);
-        container.add(choosePercussionLabel);
-        genericsLabel.setFont(font);
+        super("img/blueBgnd.jpg");
+        pageNameLabel.setText("Select Percussion");
+//gui elements start
+//labels
         genericsLabel.setBounds(180, 55, 100, 50);
         container.add(genericsLabel);
-        nationalLabel.setFont(font);
         nationalLabel.setBounds(450, 55, 100, 50);
         container.add(nationalLabel);
+//label containers
+        Container labelContainerLeft = new Container();
+        labelContainerLeft.setLayout(new GridLayout(6,1, 5, 10));
+        labelContainerLeft.setBounds(170, 120, 100, 200);
 
-        Container gridContainerL= new Container();//for labels
-        gridContainerL.setLayout(new GridLayout(6,1, 5, 10));
-        gridContainerL.setBounds(170, 120, 100, 200);
+        Container labelContainerRight = new Container();
+        labelContainerRight.setLayout(new GridLayout(6,1, 5, 10));
+        labelContainerRight.setBounds(440, 120, 50, 200);
+//combo boxes containers
+        Container numbersContainerLeft = new Container();
+        numbersContainerLeft.setLayout(new GridLayout(6,1, 5, 10));
+        numbersContainerLeft.setBounds(270, 120, 40, 200);
 
-        Container gridContainerN= new Container();//for combo boxes
-        gridContainerN.setLayout(new GridLayout(6,1, 5, 10));
-        gridContainerN.setBounds(270, 120, 40, 200);
-
-        Container gridContainerNL= new Container();//for labels
-        gridContainerNL.setLayout(new GridLayout(6,1, 5, 10));
-        gridContainerNL.setBounds(440, 120, 50, 200);
-
-        Container gridContainerNN= new Container();//for combo boxes
-        gridContainerNN.setLayout(new GridLayout(6,1, 5, 10));
-        gridContainerNN.setBounds(540, 120, 40, 200);
-
-        gridContainerL.add(congasLabel);
-        congasNumber.addItem("0");
-        congasNumber.addItem("1");
-        congasNumber.addItem("2");
-        congasNumber.addItem("3");
+        Container numbersContainerRight = new Container();//for combo boxes
+        numbersContainerRight.setLayout(new GridLayout(6,1, 5, 10));
+        numbersContainerRight.setBounds(540, 120, 40, 200);
+//congas
+        labelContainerLeft.add(congasLabel);
+        congasNumber.addItem(0);
+        congasNumber.addItem(1);
+        congasNumber.addItem(2);
+        congasNumber.addItem(3);
         congasNumber.addItemListener(this);
         if (ProjectData.percussionStrips.contains("Cong")){
-            congasNumber.setSelectedItem("1");
+            congasNumber.setSelectedItem(1);
         }else if (!ProjectData.percussionStrips.contains("Cng3") && ProjectData.percussionStrips.contains("Cng2")){
-            congasNumber.setSelectedItem("2");
+            congasNumber.setSelectedItem(2);
         }else if (ProjectData.percussionStrips.contains("Cng3")){
-            congasNumber.setSelectedItem("3");
+            congasNumber.setSelectedItem(3);
         }
-        gridContainerN.add(congasNumber);
-        gridContainerL.add(bongosLabel);
-        bongosNumber.addItem("0");
-        bongosNumber.addItem("1");
-        bongosNumber.addItem("2");
+        numbersContainerLeft.add(congasNumber);
+//bongos
+        labelContainerLeft.add(bongosLabel);
+        bongosNumber.addItem(0);
+        bongosNumber.addItem(1);
+        bongosNumber.addItem(2);
         if (ProjectData.percussionStrips.contains("Bong")){
-            bongosNumber.setSelectedItem("1");
+            bongosNumber.setSelectedItem(1);
         }else if (ProjectData.percussionStrips.contains("Bng1")){
-            bongosNumber.setSelectedItem("2");
+            bongosNumber.setSelectedItem(2);
         }
         bongosNumber.addItemListener(this);
-        gridContainerN.add(bongosNumber);
-        gridContainerL.add(shakerLabel);
-        shakerNumber.addItem("0");
-        shakerNumber.addItem("1");
-        shakerNumber.addItem("2");
-        shakerNumber.addItem("3");
+        numbersContainerLeft.add(bongosNumber);
+//shaker
+        labelContainerLeft.add(shakerLabel);
+        shakerNumber.addItem(0);
+        shakerNumber.addItem(1);
+        shakerNumber.addItem(2);
+        shakerNumber.addItem(3);
         if (ProjectData.percussionStrips.contains("Shkr")){
-            shakerNumber.setSelectedItem("1");
+            shakerNumber.setSelectedItem(1);
         }else if (!ProjectData.percussionStrips.contains("Shk3") && ProjectData.percussionStrips.contains("Shk2")){
-            shakerNumber.setSelectedItem("2");
+            shakerNumber.setSelectedItem(2);
         }else if (ProjectData.percussionStrips.contains("Shk3")){
-            shakerNumber.setSelectedItem("3");
+            shakerNumber.setSelectedItem(3);
         }
         shakerNumber.addItemListener(this);
-        gridContainerN.add(shakerNumber);
-        gridContainerL.add(tambourineLabel);
-        tambourineNumber.addItem("0");
-        tambourineNumber.addItem("1");
-        tambourineNumber.addItem("2");
-        tambourineNumber.addItem("3");
+        numbersContainerLeft.add(shakerNumber);
+//tambourine
+        labelContainerLeft.add(tambourineLabel);
+        tambourineNumber.addItem(0);
+        tambourineNumber.addItem(1);
+        tambourineNumber.addItem(2);
+        tambourineNumber.addItem(3);
         if (ProjectData.percussionStrips.contains("Tmbn")){
-            tambourineNumber.setSelectedItem("1");
-        }else if (!ProjectData.percussionStrips.contains("Tmb3") && ProjectData.percussionStrips.contains("Tmb2")){
-            tambourineNumber.setSelectedItem("2");
-        }else if (ProjectData.percussionStrips.contains("Tmb3")){
-            tambourineNumber.setSelectedItem("3");
+            tambourineNumber.setSelectedItem(1);
+        }else if (!ProjectData.percussionStrips.contains("Tmn3") && ProjectData.percussionStrips.contains("Tmn2")){
+            tambourineNumber.setSelectedItem(2);
+        }else if (ProjectData.percussionStrips.contains("Tmn3")){
+            tambourineNumber.setSelectedItem(3);
         }
         tambourineNumber.addItemListener(this);
-        gridContainerN.add(tambourineNumber);
-        gridContainerL.add(overLabel);
-        overNumber.addItem("0");
-        overNumber.addItem("1");
-        overNumber.addItem("2");
+        numbersContainerLeft.add(tambourineNumber);
+//perc. overhead
+        labelContainerLeft.add(overLabel);
+        overNumber.addItem(0);
+        overNumber.addItem(1);
+        overNumber.addItem(2);
         overNumber.addItemListener(this);
-        if (ProjectData.percussionStrips.contains("Over")){
-            overNumber.setSelectedItem("1");
-        }else if (ProjectData.percussionStrips.contains("OH2")){
-            overNumber.setSelectedItem("2");
+        if (ProjectData.percussionStrips.contains("OvHd")){
+            overNumber.setSelectedItem(1);
+        }else if (ProjectData.percussionStrips.contains("OHd2")){
+            overNumber.setSelectedItem(2);
         }
-        gridContainerN.add(overNumber);
+        numbersContainerLeft.add(overNumber);
 
-        container.add(gridContainerL);
-        container.add(gridContainerN);
-
-        gridContainerNL.add(doyraLabel);
-        doyraNumber.addItem("0");
-        doyraNumber.addItem("1");
-        doyraNumber.addItem("2");
-        doyraNumber.addItem("3");
-        doyraNumber.addItem("4");
-        doyraNumber.addItem("5");
+        container.add(labelContainerLeft);
+        container.add(numbersContainerLeft);
+//doyra
+        labelContainerRight.add(doyraLabel);
+        doyraNumber.addItem(0);
+        doyraNumber.addItem(1);
+        doyraNumber.addItem(2);
+        doyraNumber.addItem(3);
+        doyraNumber.addItem(4);
+        doyraNumber.addItem(5);
         if (ProjectData.percussionStrips.contains("Doyr")){
-            doyraNumber.setSelectedItem("1");
+            doyraNumber.setSelectedItem(1);
         }else if (!ProjectData.percussionStrips.contains("Doy3") && ProjectData.percussionStrips.contains("Doy2")){
-            doyraNumber.setSelectedItem("2");
+            doyraNumber.setSelectedItem(2);
         }else if (!ProjectData.percussionStrips.contains("Doy4") && ProjectData.percussionStrips.contains("Doy3")){
-            doyraNumber.setSelectedItem("3");
+            doyraNumber.setSelectedItem(3);
         }else if (!ProjectData.percussionStrips.contains("Doy5") && ProjectData.percussionStrips.contains("Doy4")){
-            doyraNumber.setSelectedItem("4");
+            doyraNumber.setSelectedItem(4);
         }else if (ProjectData.percussionStrips.contains("Doy5")){
-            doyraNumber.setSelectedItem("5");
+            doyraNumber.setSelectedItem(5);
         }
         doyraNumber.addItemListener(this);
-        gridContainerNN.add(doyraNumber);
-        gridContainerNL.add(tablaLabel);
-        tablaNumber.addItem("0");
-        tablaNumber.addItem("1");
-        tablaNumber.addItem("2");
-        tablaNumber.addItem("3");
+        numbersContainerRight.add(doyraNumber);
+//tabla
+        labelContainerRight.add(tablaLabel);
+        tablaNumber.addItem(0);
+        tablaNumber.addItem(1);
+        tablaNumber.addItem(2);
+        tablaNumber.addItem(3);
         if (ProjectData.percussionStrips.contains("Tabl")){
-            tablaNumber.setSelectedItem("1");
+            tablaNumber.setSelectedItem(1);
         }else if (!ProjectData.percussionStrips.contains("Tab3") && ProjectData.percussionStrips.contains("Tab2")){
-            tablaNumber.setSelectedItem("2");
+            tablaNumber.setSelectedItem(2);
         }else if (ProjectData.percussionStrips.contains("Tab3")){
-            tablaNumber.setSelectedItem("3");
+            tablaNumber.setSelectedItem(3);
         }
         tablaNumber.addItemListener(this);
-        gridContainerNN.add(tablaNumber);
-        gridContainerNL.add(nagoraLabel);
-        nagoraNumber.addItem("0");
-        nagoraNumber.addItem("1");
-        nagoraNumber.addItem("2");
-        nagoraNumber.addItem("3");
+        numbersContainerRight.add(tablaNumber);
+//nagora
+        labelContainerRight.add(nagoraLabel);
+        nagoraNumber.addItem(0);
+        nagoraNumber.addItem(1);
+        nagoraNumber.addItem(2);
+        nagoraNumber.addItem(3);
         if (ProjectData.percussionStrips.contains("Nago")){
-            nagoraNumber.setSelectedItem("1");
+            nagoraNumber.setSelectedItem(1);
         }else if (!ProjectData.percussionStrips.contains("Nag3") && ProjectData.percussionStrips.contains("Nag2")){
-            nagoraNumber.setSelectedItem("2");
+            nagoraNumber.setSelectedItem(2);
         }else if (ProjectData.percussionStrips.contains("Nag3")){
-            nagoraNumber.setSelectedItem("3");
+            nagoraNumber.setSelectedItem(3);
         }
         nagoraNumber.addItemListener(this);
-        gridContainerNN.add(nagoraNumber);
-        gridContainerNL.add(jambeyLabel);
-        jambeyNumber.addItem("0");
-        jambeyNumber.addItem("1");
-        jambeyNumber.addItem("2");
+        numbersContainerRight.add(nagoraNumber);
+//Jambey
+        labelContainerRight.add(jambeyLabel);
+        jambeyNumber.addItem(0);
+        jambeyNumber.addItem(1);
+        jambeyNumber.addItem(2);
         if (ProjectData.percussionStrips.contains("Jamb")){
-            jambeyNumber.setSelectedItem("1");
+            jambeyNumber.setSelectedItem(1);
         }else if (ProjectData.percussionStrips.contains("Jam2")){
-            jambeyNumber.setSelectedItem("2");
+            jambeyNumber.setSelectedItem(2);
         }
         jambeyNumber.addItemListener(this);
-        gridContainerNN.add(jambeyNumber);
-        gridContainerNL.add(othersLabel);
-        othersNumber.addItem("0");
-        othersNumber.addItem("1");
-        othersNumber.addItem("2");
-        othersNumber.addItem("3");
-        othersNumber.addItem("4");
-        othersNumber.addItem("5");
+        numbersContainerRight.add(jambeyNumber);
+//other percussion
+        labelContainerRight.add(othersLabel);
+        othersNumber.addItem(0);
+        othersNumber.addItem(1);
+        othersNumber.addItem(2);
+        othersNumber.addItem(3);
+        othersNumber.addItem(4);
+        othersNumber.addItem(5);
         if (ProjectData.percussionStrips.contains("Perc")){
-            othersNumber.setSelectedItem("1");
+            othersNumber.setSelectedItem(1);
         }else if (!ProjectData.percussionStrips.contains("Per3") && ProjectData.percussionStrips.contains("Per2")){
-            othersNumber.setSelectedItem("2");
+            othersNumber.setSelectedItem(2);
         }else if (!ProjectData.percussionStrips.contains("Per4") && ProjectData.percussionStrips.contains("Per3")){
-            othersNumber.setSelectedItem("3");
+            othersNumber.setSelectedItem(3);
         }else if (!ProjectData.percussionStrips.contains("Per5") && ProjectData.percussionStrips.contains("Per4")){
-            othersNumber.setSelectedItem("4");
+            othersNumber.setSelectedItem(4);
         }else if (ProjectData.percussionStrips.contains("Per5")){
-            othersNumber.setSelectedItem("5");
+            othersNumber.setSelectedItem(5);
         }
         othersNumber.addItemListener(this);
-        gridContainerNN.add(othersNumber);
+        numbersContainerRight.add(othersNumber);
 
-        container.add(gridContainerNL);
-        container.add(gridContainerNN);
-        numChannels.setBounds(650, 5, 150, 25);//label
-        container.add(numChannels);
-
-
-//elements end
+        container.add(labelContainerRight);
+        container.add(numbersContainerRight);
+//gui elements end
 
 //Button apply start
-        buttonApply.setBounds(725, 240, 70, 60);
-        buttonApply.setBorderPainted(true);
-        buttonApply.setBackground(Color.green);
-        container.add(buttonApply);
         buttonApply.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 ProjectData.percussionStrips.clear();
-
-                String congSel = congasNumber.getSelectedItem().toString();
-                switch (congSel) {
-                    case "1":
+//congas
+                switch ((int) congasNumber.getSelectedItem()) {
+                    case 1:
                         ProjectData.percussionStrips.add("Cong");
                         break;
-                    case "2":
+                    case 2:
                         ProjectData.percussionStrips.add("Cng1");
                         ProjectData.percussionStrips.add("Cng2");
                         break;
-                    case "3":
+                    case 3:
                         ProjectData.percussionStrips.add("Cng1");
                         ProjectData.percussionStrips.add("Cng2");
                         ProjectData.percussionStrips.add("Cng3");
                         break;
-
                 }
-                String bongSel = bongosNumber.getSelectedItem().toString();
-                switch (bongSel) {
-                    case "1":
+//bongos
+                switch ((int) bongosNumber.getSelectedItem()) {
+                    case 1:
                         ProjectData.percussionStrips.add("Bong");
                         break;
-                    case "2":
+                    case 2:
                         ProjectData.percussionStrips.add("Bng1");
                         ProjectData.percussionStrips.add("Bng2");
                         break;
-
-
                 }
-                String shakSel = shakerNumber.getSelectedItem().toString();
-                switch (shakSel) {
-                    case "1":
+//shaker
+                switch ((int) shakerNumber.getSelectedItem()) {
+                    case 1:
                         ProjectData.percussionStrips.add("Shkr");
                         break;
-                    case "2":
+                    case 2:
                         ProjectData.percussionStrips.add("Shk1");
                         ProjectData.percussionStrips.add("Shk2");
                         break;
-                    case "3":
+                    case 3:
                         ProjectData.percussionStrips.add("Shk1");
                         ProjectData.percussionStrips.add("Shk2");
                         ProjectData.percussionStrips.add("Shk3");
                         break;
                 }
-                String tambSel = tambourineNumber.getSelectedItem().toString();
-                switch (tambSel) {
-                    case "1":
+//tambourine
+                switch ((int) tambourineNumber.getSelectedItem()) {
+                    case 1:
                         ProjectData.percussionStrips.add("Tmbn");
                         break;
-                    case "2":
-                        ProjectData.percussionStrips.add("Tmb1");
-                        ProjectData.percussionStrips.add("Tmb2");
+                    case 2:
+                        ProjectData.percussionStrips.add("Tmn1");
+                        ProjectData.percussionStrips.add("Tmn2");
                         break;
-                    case "3":
-                        ProjectData.percussionStrips.add("Tmb1");
-                        ProjectData.percussionStrips.add("Tmb2");
-                        ProjectData.percussionStrips.add("Tmb3");
-                        break;
-                }
-                String overSel = overNumber.getSelectedItem().toString();
-                switch (overSel) {
-                    case "1":
-                        ProjectData.percussionStrips.add("Over");
-                        break;
-                    case "2":
-                        ProjectData.percussionStrips.add("Ove1");
-                        ProjectData.percussionStrips.add("Ove2");
+                    case 3:
+                        ProjectData.percussionStrips.add("Tmn1");
+                        ProjectData.percussionStrips.add("Tmn2");
+                        ProjectData.percussionStrips.add("Tmn3");
                         break;
                 }
-                String doyraSel = doyraNumber.getSelectedItem().toString();
-                switch (doyraSel) {
-                    case "1":
+//perc. overhead
+                switch ((int) overNumber.getSelectedItem()) {
+                    case 1:
+                        ProjectData.percussionStrips.add("OvHd");
+                        break;
+                    case 2:
+                        ProjectData.percussionStrips.add("OHd1");
+                        ProjectData.percussionStrips.add("OHd2");
+                        break;
+                }
+//doyra
+                switch ((int) doyraNumber.getSelectedItem()) {
+                    case 1:
                         ProjectData.percussionStrips.add("Doyr");
                         break;
-                    case "2":
+                    case 2:
                         ProjectData.percussionStrips.add("Doy1");
                         ProjectData.percussionStrips.add("Doy2");
                         break;
-                    case "3":
+                    case 3:
                         ProjectData.percussionStrips.add("Doy1");
                         ProjectData.percussionStrips.add("Doy2");
                         ProjectData.percussionStrips.add("Doy3");
                         break;
-                    case "4":
+                    case 4:
                         ProjectData.percussionStrips.add("Doy1");
                         ProjectData.percussionStrips.add("Doy2");
                         ProjectData.percussionStrips.add("Doy3");
                         ProjectData.percussionStrips.add("Doy4");
                         break;
-                    case "5":
+                    case 5:
                         ProjectData.percussionStrips.add("Doy1");
                         ProjectData.percussionStrips.add("Doy2");
                         ProjectData.percussionStrips.add("Doy3");
@@ -386,67 +318,67 @@ public class Percussion extends JFrame implements ItemListener {
                         ProjectData.percussionStrips.add("Doy5");
                         break;
                 }
-                String tablaSel = tablaNumber.getSelectedItem().toString();
-                switch (tablaSel) {
-                    case "1":
+//tabla
+                switch ((int) tablaNumber.getSelectedItem()) {
+                    case 1:
                         ProjectData.percussionStrips.add("Tabl");
                         break;
-                    case "2":
+                    case 2:
                         ProjectData.percussionStrips.add("Tab1");
                         ProjectData.percussionStrips.add("Tab2");
                         break;
-                    case "3":
+                    case 3:
                         ProjectData.percussionStrips.add("Tab1");
                         ProjectData.percussionStrips.add("Tab2");
                         ProjectData.percussionStrips.add("Tab3");
                         break;
                 }
-                String nagoraSel = nagoraNumber.getSelectedItem().toString();
-                switch (nagoraSel) {
-                    case "1":
+//nagora
+                switch ((int) nagoraNumber.getSelectedItem()) {
+                    case 1:
                         ProjectData.percussionStrips.add("Nago");
                         break;
-                    case "2":
+                    case 2:
                         ProjectData.percussionStrips.add("Nag1");
                         ProjectData.percussionStrips.add("Nag2");
                         break;
-                    case "3":
+                    case 3:
                         ProjectData.percussionStrips.add("Nag1");
                         ProjectData.percussionStrips.add("Nag2");
                         ProjectData.percussionStrips.add("Nag3");
                         break;
                 }
-                String jambeySel = jambeyNumber.getSelectedItem().toString();
-                switch (jambeySel) {
-                    case "1":
+//Jambey
+                switch ((int) jambeyNumber.getSelectedItem()) {
+                    case 1:
                         ProjectData.percussionStrips.add("Jamb");
                         break;
-                    case "2":
+                    case 2:
                         ProjectData.percussionStrips.add("Jam1");
                         ProjectData.percussionStrips.add("Jam2");
                         break;
                 }
-                String otherSel = othersNumber.getSelectedItem().toString();
-                switch (otherSel) {
-                    case "1":
+//other percussion
+                switch ((int) othersNumber.getSelectedItem()) {
+                    case 1:
                         ProjectData.percussionStrips.add("Perc");
                         break;
-                    case "2":
+                    case 2:
                         ProjectData.percussionStrips.add("Per1");
                         ProjectData.percussionStrips.add("Per2");
                         break;
-                    case "3":
+                    case 3:
                         ProjectData.percussionStrips.add("Per1");
                         ProjectData.percussionStrips.add("Per2");
                         ProjectData.percussionStrips.add("Per3");
                         break;
-                    case "4":
+                    case 4:
                         ProjectData.percussionStrips.add("Per1");
                         ProjectData.percussionStrips.add("Per2");
                         ProjectData.percussionStrips.add("Per3");
                         ProjectData.percussionStrips.add("Per4");
                         break;
-                    case "5":
+                    case 5:
                         ProjectData.percussionStrips.add("Per1");
                         ProjectData.percussionStrips.add("Per2");
                         ProjectData.percussionStrips.add("Per3");
@@ -455,66 +387,27 @@ public class Percussion extends JFrame implements ItemListener {
                         break;
                 }
 
-                buttonNext.setEnabled(true);
-                numChannels.setText("Percussion Channels: " + ProjectData.percussionStrips.size());
+                theseChannelsLabel.setText("These Channels: " + ProjectData.percussionStrips.size());
+                DefineInstruments.buttonPercuss.setText("Percussion" + ProjectData.percussionStrips.size());
             }
         });
 //Button apply end
-
-
-//Button back start
-        buttonBack.setBounds(100, 360, 100, 40);
-        buttonBack.setBorderPainted(true);
-        buttonBack.setBackground(Color.orange);
-        container.add(buttonBack);
-
-        buttonBack.addActionListener(new ActionListener() {
+//button no one
+        buttonNoOne.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                terminateThisWindow();
-
-            }
-        });
-//Button back end
-
-//Button next start
-        buttonNext.setBounds(640, 360, 100, 40);
-        buttonNext.setBorderPainted(true);
-        buttonNext.setBackground(Color.orange);
-        container.add(buttonNext);
-        buttonNext.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                DefineInstruments.buttonPercuss.setText("Percussion:" + ProjectData.percussionStrips.size());
-                DefineInstruments.numChannels.setText("All Channels:" + ProjectData.commonChannels());
-                terminateThisWindow();
-            }
-
-        });
-//Button next end
-
-
-
-        this.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                super.windowClosing(e);
-                int option = JOptionPane.showConfirmDialog(null,
-                        "Are you really want to quit?", "Confirm", JOptionPane.YES_NO_OPTION,
-                        JOptionPane.QUESTION_MESSAGE);
-                if (option == JOptionPane.YES_OPTION) {
-                    System.exit(0);
-                }else if (option == JOptionPane.NO_OPTION){
-                    Percussion percussion = new Percussion();
-                    percussion.setVisible(true);
+                congasNumber.setSelectedItem(0);
+                bongosNumber.setSelectedItem(0);
+                shakerNumber.setSelectedItem(0);
+                tambourineNumber.setSelectedItem(0);
+                overNumber.setSelectedItem(0);
+                doyraNumber.setSelectedItem(0);
+                tablaNumber.setSelectedItem(0);
+                nagoraNumber.setSelectedItem(0);
+                jambeyNumber.setSelectedItem(0);
+                othersNumber.setSelectedItem(0);
                 }
-            }
         });
     }
-    @Override
-    public void itemStateChanged(ItemEvent e) {
-        buttonNext.setEnabled(false);
-    }
-
 }
 

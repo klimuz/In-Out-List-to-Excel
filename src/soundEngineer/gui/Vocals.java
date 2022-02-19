@@ -2,405 +2,407 @@ package soundEngineer.gui;
 
 import soundEngineer.server.ProjectData;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.File;
-import java.io.IOException;
 
-public class Vocals extends JFrame implements ItemListener {
+public class Vocals extends GUIStamp {
 
-    private JMenuBar jMenuBar = new JMenuBar();
-    JMenu m1 = new JMenu("File");
-    JMenu m2 = new JMenu("Help");
-    private JButton buttonBack = new JButton("Back");
-    private JButton buttonNext = new JButton("Next");
-    private JButton buttonApply = new JButton("Apply");
-    private JLabel chooseOutputsLabel = new JLabel("Choose among vocals:");
     private JLabel leadVocLabel = new JLabel("Lead vocal");
     private JLabel backVocLabel = new JLabel("Back vocal");
+    private JLabel choirLabel = new JLabel("Choir");
 
-    private JComboBox<String> leadVocNumber = new JComboBox();
-    private JComboBox<String> backVocNumber = new JComboBox();
-    private JLabel leadCannels = new JLabel("");
-    private JLabel backCannels = new JLabel("");
-    public void terminateThisWindow(){
-        this.dispose();
-    }
-
-
+    private JComboBox<Integer> leadVocNumber = new JComboBox();
+    private JComboBox<Integer> backVocNumber = new JComboBox();
+    private JComboBox<Integer> choirNumber = new JComboBox();
 
     public Vocals() throws HeadlessException {
-        super("In-Out List to Exel : " + ProjectData.projectName);
-        Font font = new Font("",Font.BOLD,20);
-        this.setIconImage(new ImageIcon("img/logo.png").getImage());
-        Toolkit toolkit = Toolkit.getDefaultToolkit();
-        Dimension dimension = toolkit.getScreenSize();
-        this.setBounds(dimension.width/2-350, dimension.height/2-250, 854, 480);
-        this.setResizable(false);
-
-        m1.add(new JMenuItem("Open", 'O'));
-        m1.add(new JMenuItem("Save", 'S'));
-        m1.add(new JMenuItem("Recent"));
-        m1.addSeparator();
-        JMenuItem exit =  m1.add(new JMenuItem("Exit"));
-        exit.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int option = JOptionPane.showConfirmDialog(null,
-                        "Are you really want to quit?", "Confirm", JOptionPane.YES_NO_OPTION,
-                        JOptionPane.QUESTION_MESSAGE);
-                if (option == JOptionPane.YES_OPTION) {
-                    System.exit(0);
-                }
-            }
-        });
-        exit.setAccelerator(KeyStroke.getKeyStroke("ctrl E"));
-
-        m2.add(new JMenuItem("About"));
-        jMenuBar.add(m1);
-        jMenuBar.add(m2);
-        jMenuBar.setBackground(Color.green);
-        this.setJMenuBar(jMenuBar);
-        this.revalidate();
-
-//background image start
-        try {
-            Image backgroundImage = ImageIO.read(new File("img/vocs.jpg"));
-            setContentPane(new JPanel(new BorderLayout()) {
-                @Override public void paintComponent(Graphics g) {
-                    g.drawImage(backgroundImage, 0, 0, getWidth(),getHeight(), this);
-                }
-            });
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-//background image end
-
-//elements start
-        Container container = this.getContentPane();
-        container.setLayout(null);
-        chooseOutputsLabel.setFont(font);
-        chooseOutputsLabel.setForeground(Color.orange);
-        chooseOutputsLabel.setBounds(245, 5, 300, 50);
-        container.add(chooseOutputsLabel);
-        backVocLabel.setFont(font);
-        backVocLabel.setBounds(185, 55, 200, 50);
-        backVocLabel.setForeground(Color.orange);
-        container.add(backVocLabel);
-        leadVocLabel.setFont(font);
+        super("img/vocs.jpg");
+        pageNameLabel.setForeground(Color.orange);
+        pageNameLabel.setText(" Select Vocals");
+//gui elements start
+//labels
+        leadVocLabel.setBounds(100, 150, 70, 20);
+        leadVocLabel.setBackground(Color.BLUE);
         leadVocLabel.setForeground(Color.orange);
-        leadVocLabel.setBounds(505, 55, 200, 50);
+        leadVocLabel.setOpaque(true);
         container.add(leadVocLabel);
+        backVocLabel.setBounds(400, 150, 70, 20);
+        backVocLabel.setBackground(Color.BLUE);
+        backVocLabel.setForeground(Color.orange);
+        backVocLabel.setOpaque(true);
+        container.add(backVocLabel);
+        choirLabel.setBounds(700, 150, 70, 20);
+        choirLabel.setBackground(Color.BLUE);
+        choirLabel.setForeground(Color.orange);
+        choirLabel.setOpaque(true);
+        container.add(choirLabel);
+        allChannelsLabel.setForeground(Color.orange);
+        theseChannelsLabel.setForeground(Color.orange);
 
-        leadVocNumber.addItem("0");
-        leadVocNumber.addItem("1");
-        leadVocNumber.addItem("2");
-        leadVocNumber.addItem("3");
-        leadVocNumber.addItem("4");
-        leadVocNumber.addItem("5");
-        leadVocNumber.addItem("6");
-        leadVocNumber.addItem("7");
-        leadVocNumber.addItem("8");
-        leadVocNumber.addItem("9");
-        leadVocNumber.addItem("10");
+//main vocals
+        leadVocNumber.addItem(0);
+        leadVocNumber.addItem(1);
+        leadVocNumber.addItem(2);
+        leadVocNumber.addItem(3);
+        leadVocNumber.addItem(4);
+        leadVocNumber.addItem(5);
+        leadVocNumber.addItem(6);
+        leadVocNumber.addItem(7);
+        leadVocNumber.addItem(8);
+        leadVocNumber.addItem(9);
+        leadVocNumber.addItem(10);
         leadVocNumber.addItemListener(this);
-        if (ProjectData.leadVocStrips.contains("MV")){
-            leadVocNumber.setSelectedItem("1");
-        }else if (!ProjectData.leadVocStrips.contains("MV3") && ProjectData.leadVocStrips.contains("MV2")){
-            leadVocNumber.setSelectedItem("2");
-        }else if (!ProjectData.leadVocStrips.contains("MV4") && ProjectData.leadVocStrips.contains("MV3")){
-            leadVocNumber.setSelectedItem("3");
-        }else if (!ProjectData.leadVocStrips.contains("MV5") && ProjectData.leadVocStrips.contains("MV4")){
-            leadVocNumber.setSelectedItem("4");
-        }else if (!ProjectData.leadVocStrips.contains("MV6") && ProjectData.leadVocStrips.contains("MV5")){
-            leadVocNumber.setSelectedItem("5");
-        }else if (!ProjectData.leadVocStrips.contains("MV7") && ProjectData.leadVocStrips.contains("MV6")){
-            leadVocNumber.setSelectedItem("6");
-        }else if (!ProjectData.leadVocStrips.contains("MV8") && ProjectData.leadVocStrips.contains("MV7")){
-            leadVocNumber.setSelectedItem("7");
-        }else if (!ProjectData.leadVocStrips.contains("MV9") && ProjectData.leadVocStrips.contains("MV8")){
-            leadVocNumber.setSelectedItem("8");
-        }else if (!ProjectData.leadVocStrips.contains("MV10") && ProjectData.leadVocStrips.contains("MV9")){
-            leadVocNumber.setSelectedItem("9");
-        }else if (ProjectData.leadVocStrips.contains("MV10")){
-            leadVocNumber.setSelectedItem("10");
+        if (ProjectData.vocalStrips.contains("MV")){
+            leadVocNumber.setSelectedItem(1);
+        }else if (!ProjectData.vocalStrips.contains("MV3") && ProjectData.vocalStrips.contains("MV2")){
+            leadVocNumber.setSelectedItem(2);
+        }else if (!ProjectData.vocalStrips.contains("MV4") && ProjectData.vocalStrips.contains("MV3")){
+            leadVocNumber.setSelectedItem(3);
+        }else if (!ProjectData.vocalStrips.contains("MV5") && ProjectData.vocalStrips.contains("MV4")){
+            leadVocNumber.setSelectedItem(4);
+        }else if (!ProjectData.vocalStrips.contains("MV6") && ProjectData.vocalStrips.contains("MV5")){
+            leadVocNumber.setSelectedItem(5);
+        }else if (!ProjectData.vocalStrips.contains("MV7") && ProjectData.vocalStrips.contains("MV6")){
+            leadVocNumber.setSelectedItem(6);
+        }else if (!ProjectData.vocalStrips.contains("MV8") && ProjectData.vocalStrips.contains("MV7")){
+            leadVocNumber.setSelectedItem(7);
+        }else if (!ProjectData.vocalStrips.contains("MV9") && ProjectData.vocalStrips.contains("MV8")){
+            leadVocNumber.setSelectedItem(8);
+        }else if (!ProjectData.vocalStrips.contains("MV10") && ProjectData.vocalStrips.contains("MV9")){
+            leadVocNumber.setSelectedItem(9);
+        }else if (ProjectData.vocalStrips.contains("MV10")){
+            leadVocNumber.setSelectedItem(10);
         }
-        leadVocNumber.setBounds(535, 100, 40, 20);
+        leadVocNumber.setBounds(110, 170, 40, 20);
         container.add(leadVocNumber);
-        backVocNumber.addItem("0");
-        backVocNumber.addItem("1");
-        backVocNumber.addItem("2");
-        backVocNumber.addItem("3");
-        backVocNumber.addItem("4");
-        backVocNumber.addItem("5");
-        backVocNumber.addItem("6");
-        backVocNumber.addItem("7");
-        backVocNumber.addItem("8");
-        backVocNumber.addItem("9");
-        backVocNumber.addItem("10");
-        if (ProjectData.backVocStrips.contains("BV")){
-            backVocNumber.setSelectedItem("1");
-        }else if (!ProjectData.backVocStrips.contains("BV3") && ProjectData.backVocStrips.contains("BV2")){
-            backVocNumber.setSelectedItem("2");
-        }else if (!ProjectData.backVocStrips.contains("BV4") && ProjectData.backVocStrips.contains("BV3")){
-            backVocNumber.setSelectedItem("3");
-        }else if (!ProjectData.backVocStrips.contains("BV5") && ProjectData.backVocStrips.contains("BV4")){
-            backVocNumber.setSelectedItem("4");
-        }else if (!ProjectData.backVocStrips.contains("BV6") && ProjectData.backVocStrips.contains("BV5")){
-            backVocNumber.setSelectedItem("5");
-        }else if (!ProjectData.backVocStrips.contains("BV7") && ProjectData.backVocStrips.contains("BV6")){
-            backVocNumber.setSelectedItem("6");
-        }else if (!ProjectData.backVocStrips.contains("BV8") && ProjectData.backVocStrips.contains("BV7")){
-            backVocNumber.setSelectedItem("7");
-        }else if (!ProjectData.backVocStrips.contains("BV9") && ProjectData.backVocStrips.contains("BV8")){
-            backVocNumber.setSelectedItem("8");
-        }else if (!ProjectData.backVocStrips.contains("BV10") && ProjectData.backVocStrips.contains("BV9")){
-            backVocNumber.setSelectedItem("9");
-        }else if (ProjectData.backVocStrips.contains("BV10")){
-            backVocNumber.setSelectedItem("10");
+//back vocals
+        backVocNumber.addItem(0);
+        backVocNumber.addItem(1);
+        backVocNumber.addItem(2);
+        backVocNumber.addItem(3);
+        backVocNumber.addItem(4);
+        backVocNumber.addItem(5);
+        backVocNumber.addItem(6);
+        backVocNumber.addItem(7);
+        backVocNumber.addItem(8);
+        backVocNumber.addItem(9);
+        backVocNumber.addItem(10);
+        backVocNumber.addItemListener(this);
+        if (ProjectData.vocalStrips.contains("BV")){
+            backVocNumber.setSelectedItem(1);
+        }else if (!ProjectData.vocalStrips.contains("BV3") && ProjectData.vocalStrips.contains("BV2")){
+            backVocNumber.setSelectedItem(2);
+        }else if (!ProjectData.vocalStrips.contains("BV4") && ProjectData.vocalStrips.contains("BV3")){
+            backVocNumber.setSelectedItem(3);
+        }else if (!ProjectData.vocalStrips.contains("BV5") && ProjectData.vocalStrips.contains("BV4")){
+            backVocNumber.setSelectedItem(4);
+        }else if (!ProjectData.vocalStrips.contains("BV6") && ProjectData.vocalStrips.contains("BV5")){
+            backVocNumber.setSelectedItem(5);
+        }else if (!ProjectData.vocalStrips.contains("BV7") && ProjectData.vocalStrips.contains("BV6")){
+            backVocNumber.setSelectedItem(6);
+        }else if (!ProjectData.vocalStrips.contains("BV8") && ProjectData.vocalStrips.contains("BV7")){
+            backVocNumber.setSelectedItem(7);
+        }else if (!ProjectData.vocalStrips.contains("BV9") && ProjectData.vocalStrips.contains("BV8")){
+            backVocNumber.setSelectedItem(8);
+        }else if (!ProjectData.vocalStrips.contains("BV10") && ProjectData.vocalStrips.contains("BV9")){
+            backVocNumber.setSelectedItem(9);
+        }else if (ProjectData.vocalStrips.contains("BV10")){
+            backVocNumber.setSelectedItem(10);
         }
-        backVocNumber.setBounds(215, 100, 40, 20);
+        backVocNumber.setBounds(410, 170, 40, 20);
         container.add(backVocNumber);
-        leadCannels.setBounds(650, 5, 150, 25);//label1
-        backCannels.setBounds(650, 20, 150, 25);//label2
-        leadCannels.setForeground(Color.green);
-        backCannels.setForeground(Color.green);
-        container.add(leadCannels);
-        container.add(backCannels);
-
-
+//Choir
+        choirNumber.addItem(0);
+        choirNumber.addItem(1);
+        choirNumber.addItem(2);
+        choirNumber.addItem(3);
+        choirNumber.addItem(4);
+        choirNumber.addItem(5);
+        choirNumber.addItem(6);
+        choirNumber.addItem(7);
+        choirNumber.addItem(8);
+        choirNumber.addItem(9);
+        choirNumber.addItem(10);
+        choirNumber.addItemListener(this);
+        if (ProjectData.vocalStrips.contains("Chor")){
+            choirNumber.setSelectedItem(1);
+        }else if (!ProjectData.vocalStrips.contains("Cho3") && ProjectData.vocalStrips.contains("Cho2")){
+            choirNumber.setSelectedItem(2);
+        }else if (!ProjectData.vocalStrips.contains("Cho4") && ProjectData.vocalStrips.contains("Cho3")){
+            choirNumber.setSelectedItem(3);
+        }else if (!ProjectData.vocalStrips.contains("Cho5") && ProjectData.vocalStrips.contains("Cho4")){
+            choirNumber.setSelectedItem(4);
+        }else if (!ProjectData.vocalStrips.contains("Cho6") && ProjectData.vocalStrips.contains("Cho5")){
+            choirNumber.setSelectedItem(5);
+        }else if (!ProjectData.vocalStrips.contains("Cho7") && ProjectData.vocalStrips.contains("Cho6")){
+            choirNumber.setSelectedItem(6);
+        }else if (!ProjectData.vocalStrips.contains("Cho8") && ProjectData.vocalStrips.contains("Cho7")){
+            choirNumber.setSelectedItem(7);
+        }else if (!ProjectData.vocalStrips.contains("Cho9") && ProjectData.vocalStrips.contains("Cho8")){
+            choirNumber.setSelectedItem(8);
+        }else if (!ProjectData.vocalStrips.contains("Cho10") && ProjectData.vocalStrips.contains("Cho9")){
+            choirNumber.setSelectedItem(9);
+        }else if (ProjectData.vocalStrips.contains("Cr10")){
+            choirNumber.setSelectedItem(10);
+        }
+        choirNumber.setBounds(710, 170, 40, 20);
+        container.add(choirNumber);
 //elements end
 
 //Button apply start
-        buttonApply.setBounds(725, 240, 70, 30);
-        buttonApply.setBorderPainted(true);
-        buttonApply.setBackground(Color.green);
-        container.add(buttonApply);
         buttonApply.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ProjectData.leadVocStrips.clear();
-                ProjectData.backVocStrips.clear();
-
-                String lVocSel = leadVocNumber.getSelectedItem().toString();
-                switch (lVocSel) {
-                    case "1":
-                        ProjectData.leadVocStrips.add("MV");
+                ProjectData.vocalStrips.clear();
+//main vocals
+                switch ((int) leadVocNumber.getSelectedItem()) {
+                    case 1:
+                        ProjectData.vocalStrips.add("MV");
                         break;
-                    case "2":
-                        ProjectData.leadVocStrips.add("MV1");
-                        ProjectData.leadVocStrips.add("MV2");
+                    case 2:
+                        ProjectData.vocalStrips.add("MV1");
+                        ProjectData.vocalStrips.add("MV2");
                         break;
-                    case "3":
-                        ProjectData.leadVocStrips.add("MV1");
-                        ProjectData.leadVocStrips.add("MV2");
-                        ProjectData.leadVocStrips.add("MV3");
+                    case 3:
+                        ProjectData.vocalStrips.add("MV1");
+                        ProjectData.vocalStrips.add("MV2");
+                        ProjectData.vocalStrips.add("MV3");
                         break;
-                    case "4":
-                        ProjectData.leadVocStrips.add("MV1");
-                        ProjectData.leadVocStrips.add("MV2");
-                        ProjectData.leadVocStrips.add("MV3");
-                        ProjectData.leadVocStrips.add("MV4");
+                    case 4:
+                        ProjectData.vocalStrips.add("MV1");
+                        ProjectData.vocalStrips.add("MV2");
+                        ProjectData.vocalStrips.add("MV3");
+                        ProjectData.vocalStrips.add("MV4");
                         break;
-                    case "5":
-                        ProjectData.leadVocStrips.add("MV1");
-                        ProjectData.leadVocStrips.add("MV2");
-                        ProjectData.leadVocStrips.add("MV3");
-                        ProjectData.leadVocStrips.add("MV4");
-                        ProjectData.leadVocStrips.add("MV5");
+                    case 5:
+                        ProjectData.vocalStrips.add("MV1");
+                        ProjectData.vocalStrips.add("MV2");
+                        ProjectData.vocalStrips.add("MV3");
+                        ProjectData.vocalStrips.add("MV4");
+                        ProjectData.vocalStrips.add("MV5");
                         break;
-                    case "6":
-                        ProjectData.leadVocStrips.add("MV1");
-                        ProjectData.leadVocStrips.add("MV2");
-                        ProjectData.leadVocStrips.add("MV3");
-                        ProjectData.leadVocStrips.add("MV4");
-                        ProjectData.leadVocStrips.add("MV5");
-                        ProjectData.leadVocStrips.add("MV6");
+                    case 6:
+                        ProjectData.vocalStrips.add("MV1");
+                        ProjectData.vocalStrips.add("MV2");
+                        ProjectData.vocalStrips.add("MV3");
+                        ProjectData.vocalStrips.add("MV4");
+                        ProjectData.vocalStrips.add("MV5");
+                        ProjectData.vocalStrips.add("MV6");
                         break;
-                    case "7":
-                        ProjectData.leadVocStrips.add("MV1");
-                        ProjectData.leadVocStrips.add("MV2");
-                        ProjectData.leadVocStrips.add("MV3");
-                        ProjectData.leadVocStrips.add("MV4");
-                        ProjectData.leadVocStrips.add("MV5");
-                        ProjectData.leadVocStrips.add("MV6");
-                        ProjectData.leadVocStrips.add("MV7");
+                    case 7:
+                        ProjectData.vocalStrips.add("MV1");
+                        ProjectData.vocalStrips.add("MV2");
+                        ProjectData.vocalStrips.add("MV3");
+                        ProjectData.vocalStrips.add("MV4");
+                        ProjectData.vocalStrips.add("MV5");
+                        ProjectData.vocalStrips.add("MV6");
+                        ProjectData.vocalStrips.add("MV7");
                         break;
-                    case "8":
-                        ProjectData.leadVocStrips.add("MV1");
-                        ProjectData.leadVocStrips.add("MV2");
-                        ProjectData.leadVocStrips.add("MV3");
-                        ProjectData.leadVocStrips.add("MV4");
-                        ProjectData.leadVocStrips.add("MV5");
-                        ProjectData.leadVocStrips.add("MV6");
-                        ProjectData.leadVocStrips.add("MV7");
-                        ProjectData.leadVocStrips.add("MV8");
+                    case 8:
+                        ProjectData.vocalStrips.add("MV1");
+                        ProjectData.vocalStrips.add("MV2");
+                        ProjectData.vocalStrips.add("MV3");
+                        ProjectData.vocalStrips.add("MV4");
+                        ProjectData.vocalStrips.add("MV5");
+                        ProjectData.vocalStrips.add("MV6");
+                        ProjectData.vocalStrips.add("MV7");
+                        ProjectData.vocalStrips.add("MV8");
                         break;
-                    case "9":
-                        ProjectData.leadVocStrips.add("MV1");
-                        ProjectData.leadVocStrips.add("MV2");
-                        ProjectData.leadVocStrips.add("MV3");
-                        ProjectData.leadVocStrips.add("MV4");
-                        ProjectData.leadVocStrips.add("MV5");
-                        ProjectData.leadVocStrips.add("MV6");
-                        ProjectData.leadVocStrips.add("MV7");
-                        ProjectData.leadVocStrips.add("MV8");
-                        ProjectData.leadVocStrips.add("MV9");
+                    case 9:
+                        ProjectData.vocalStrips.add("MV1");
+                        ProjectData.vocalStrips.add("MV2");
+                        ProjectData.vocalStrips.add("MV3");
+                        ProjectData.vocalStrips.add("MV4");
+                        ProjectData.vocalStrips.add("MV5");
+                        ProjectData.vocalStrips.add("MV6");
+                        ProjectData.vocalStrips.add("MV7");
+                        ProjectData.vocalStrips.add("MV8");
+                        ProjectData.vocalStrips.add("MV9");
                         break;
-                    case "10":
-                        ProjectData.leadVocStrips.add("MV1");
-                        ProjectData.leadVocStrips.add("MV2");
-                        ProjectData.leadVocStrips.add("MV3");
-                        ProjectData.leadVocStrips.add("MV4");
-                        ProjectData.leadVocStrips.add("MV5");
-                        ProjectData.leadVocStrips.add("MV6");
-                        ProjectData.leadVocStrips.add("MV7");
-                        ProjectData.leadVocStrips.add("MV8");
-                        ProjectData.leadVocStrips.add("MV9");
-                        ProjectData.leadVocStrips.add("MV10");
+                    case 10:
+                        ProjectData.vocalStrips.add("MV1");
+                        ProjectData.vocalStrips.add("MV2");
+                        ProjectData.vocalStrips.add("MV3");
+                        ProjectData.vocalStrips.add("MV4");
+                        ProjectData.vocalStrips.add("MV5");
+                        ProjectData.vocalStrips.add("MV6");
+                        ProjectData.vocalStrips.add("MV7");
+                        ProjectData.vocalStrips.add("MV8");
+                        ProjectData.vocalStrips.add("MV9");
+                        ProjectData.vocalStrips.add("MV10");
                         break;
                 }
-                String bVocSel = backVocNumber.getSelectedItem().toString();
-                switch (bVocSel) {
-                    case "1":
-                        ProjectData.backVocStrips.add("BV");
+//back vocals
+                switch ((int) backVocNumber.getSelectedItem()) {
+                    case 1:
+                        ProjectData.vocalStrips.add("BV");
                         break;
-                    case "2":
-                        ProjectData.backVocStrips.add("BV1");
-                        ProjectData.backVocStrips.add("BV2");
+                    case 2:
+                        ProjectData.vocalStrips.add("BV1");
+                        ProjectData.vocalStrips.add("BV2");
                         break;
-                    case "3":
-                        ProjectData.backVocStrips.add("BV1");
-                        ProjectData.backVocStrips.add("BV2");
-                        ProjectData.backVocStrips.add("BV3");
+                    case 3:
+                        ProjectData.vocalStrips.add("BV1");
+                        ProjectData.vocalStrips.add("BV2");
+                        ProjectData.vocalStrips.add("BV3");
                         break;
-                    case "4":
-                        ProjectData.backVocStrips.add("BV1");
-                        ProjectData.backVocStrips.add("BV2");
-                        ProjectData.backVocStrips.add("BV3");
-                        ProjectData.backVocStrips.add("BV4");
+                    case 4:
+                        ProjectData.vocalStrips.add("BV1");
+                        ProjectData.vocalStrips.add("BV2");
+                        ProjectData.vocalStrips.add("BV3");
+                        ProjectData.vocalStrips.add("BV4");
                         break;
-                    case "5":
-                        ProjectData.backVocStrips.add("BV1");
-                        ProjectData.backVocStrips.add("BV2");
-                        ProjectData.backVocStrips.add("BV3");
-                        ProjectData.backVocStrips.add("BV4");
-                        ProjectData.backVocStrips.add("BV5");
+                    case 5:
+                        ProjectData.vocalStrips.add("BV1");
+                        ProjectData.vocalStrips.add("BV2");
+                        ProjectData.vocalStrips.add("BV3");
+                        ProjectData.vocalStrips.add("BV4");
+                        ProjectData.vocalStrips.add("BV5");
                         break;
-                    case "6":
-                        ProjectData.backVocStrips.add("BV1");
-                        ProjectData.backVocStrips.add("BV2");
-                        ProjectData.backVocStrips.add("BV3");
-                        ProjectData.backVocStrips.add("BV4");
-                        ProjectData.backVocStrips.add("BV5");
-                        ProjectData.backVocStrips.add("BV6");
+                    case 6:
+                        ProjectData.vocalStrips.add("BV1");
+                        ProjectData.vocalStrips.add("BV2");
+                        ProjectData.vocalStrips.add("BV3");
+                        ProjectData.vocalStrips.add("BV4");
+                        ProjectData.vocalStrips.add("BV5");
+                        ProjectData.vocalStrips.add("BV6");
                         break;
-                    case "7":
-                        ProjectData.backVocStrips.add("BV1");
-                        ProjectData.backVocStrips.add("BV2");
-                        ProjectData.backVocStrips.add("BV3");
-                        ProjectData.backVocStrips.add("BV4");
-                        ProjectData.backVocStrips.add("BV5");
-                        ProjectData.backVocStrips.add("BV6");
-                        ProjectData.backVocStrips.add("BV7");
+                    case 7:
+                        ProjectData.vocalStrips.add("BV1");
+                        ProjectData.vocalStrips.add("BV2");
+                        ProjectData.vocalStrips.add("BV3");
+                        ProjectData.vocalStrips.add("BV4");
+                        ProjectData.vocalStrips.add("BV5");
+                        ProjectData.vocalStrips.add("BV6");
+                        ProjectData.vocalStrips.add("BV7");
                         break;
-                    case "8":
-                        ProjectData.backVocStrips.add("BV1");
-                        ProjectData.backVocStrips.add("BV2");
-                        ProjectData.backVocStrips.add("BV3");
-                        ProjectData.backVocStrips.add("BV4");
-                        ProjectData.backVocStrips.add("BV5");
-                        ProjectData.backVocStrips.add("BV6");
-                        ProjectData.backVocStrips.add("BV7");
-                        ProjectData.backVocStrips.add("BV8");
+                    case 8:
+                        ProjectData.vocalStrips.add("BV1");
+                        ProjectData.vocalStrips.add("BV2");
+                        ProjectData.vocalStrips.add("BV3");
+                        ProjectData.vocalStrips.add("BV4");
+                        ProjectData.vocalStrips.add("BV5");
+                        ProjectData.vocalStrips.add("BV6");
+                        ProjectData.vocalStrips.add("BV7");
+                        ProjectData.vocalStrips.add("BV8");
                         break;
-                    case "9":
-                        ProjectData.backVocStrips.add("BV1");
-                        ProjectData.backVocStrips.add("BV2");
-                        ProjectData.backVocStrips.add("BV3");
-                        ProjectData.backVocStrips.add("BV4");
-                        ProjectData.backVocStrips.add("BV5");
-                        ProjectData.backVocStrips.add("BV6");
-                        ProjectData.backVocStrips.add("BV7");
-                        ProjectData.backVocStrips.add("BV8");
-                        ProjectData.backVocStrips.add("BV9");
+                    case 9:
+                        ProjectData.vocalStrips.add("BV1");
+                        ProjectData.vocalStrips.add("BV2");
+                        ProjectData.vocalStrips.add("BV3");
+                        ProjectData.vocalStrips.add("BV4");
+                        ProjectData.vocalStrips.add("BV5");
+                        ProjectData.vocalStrips.add("BV6");
+                        ProjectData.vocalStrips.add("BV7");
+                        ProjectData.vocalStrips.add("BV8");
+                        ProjectData.vocalStrips.add("BV9");
                         break;
-                    case "10":
-                        ProjectData.backVocStrips.add("BV1");
-                        ProjectData.backVocStrips.add("BV2");
-                        ProjectData.backVocStrips.add("BV3");
-                        ProjectData.backVocStrips.add("BV4");
-                        ProjectData.backVocStrips.add("BV5");
-                        ProjectData.backVocStrips.add("BV6");
-                        ProjectData.backVocStrips.add("BV7");
-                        ProjectData.backVocStrips.add("BV8");
-                        ProjectData.backVocStrips.add("BV9");
-                        ProjectData.backVocStrips.add("BV10");
+                    case 10:
+                        ProjectData.vocalStrips.add("BV1");
+                        ProjectData.vocalStrips.add("BV2");
+                        ProjectData.vocalStrips.add("BV3");
+                        ProjectData.vocalStrips.add("BV4");
+                        ProjectData.vocalStrips.add("BV5");
+                        ProjectData.vocalStrips.add("BV6");
+                        ProjectData.vocalStrips.add("BV7");
+                        ProjectData.vocalStrips.add("BV8");
+                        ProjectData.vocalStrips.add("BV9");
+                        ProjectData.vocalStrips.add("BV10");
                         break;
                 }
-                buttonNext.setEnabled(true);
-                leadCannels.setText("Lead Channels: " + (ProjectData.leadVocStrips.size()));
-                backCannels.setText("Back Channels: " + (ProjectData.backVocStrips.size()));
+//Choir
+                switch ((int) choirNumber.getSelectedItem()) {
+                    case 1:
+                        ProjectData.vocalStrips.add("Chor");
+                        break;
+                    case 2:
+                        ProjectData.vocalStrips.add("Cho1");
+                        ProjectData.vocalStrips.add("Cho2");
+                        break;
+                    case 3:
+                        ProjectData.vocalStrips.add("Cho1");
+                        ProjectData.vocalStrips.add("Cho2");
+                        ProjectData.vocalStrips.add("Cho3");
+                        break;
+                    case 4:
+                        ProjectData.vocalStrips.add("Cho1");
+                        ProjectData.vocalStrips.add("Cho2");
+                        ProjectData.vocalStrips.add("Cho3");
+                        ProjectData.vocalStrips.add("Cho4");
+                        break;
+                    case 5:
+                        ProjectData.vocalStrips.add("Cho1");
+                        ProjectData.vocalStrips.add("Cho2");
+                        ProjectData.vocalStrips.add("Cho3");
+                        ProjectData.vocalStrips.add("Cho4");
+                        ProjectData.vocalStrips.add("Cho5");
+                        break;
+                    case 6:
+                        ProjectData.vocalStrips.add("Cho1");
+                        ProjectData.vocalStrips.add("Cho2");
+                        ProjectData.vocalStrips.add("Cho3");
+                        ProjectData.vocalStrips.add("Cho4");
+                        ProjectData.vocalStrips.add("Cho5");
+                        ProjectData.vocalStrips.add("Cho6");
+                        break;
+                    case 7:
+                        ProjectData.vocalStrips.add("Cho1");
+                        ProjectData.vocalStrips.add("Cho2");
+                        ProjectData.vocalStrips.add("Cho3");
+                        ProjectData.vocalStrips.add("Cho4");
+                        ProjectData.vocalStrips.add("Cho5");
+                        ProjectData.vocalStrips.add("Cho6");
+                        ProjectData.vocalStrips.add("Cho7");
+                        break;
+                    case 8:
+                        ProjectData.vocalStrips.add("Cho1");
+                        ProjectData.vocalStrips.add("Cho2");
+                        ProjectData.vocalStrips.add("Cho3");
+                        ProjectData.vocalStrips.add("Cho4");
+                        ProjectData.vocalStrips.add("Cho5");
+                        ProjectData.vocalStrips.add("Cho6");
+                        ProjectData.vocalStrips.add("Cho7");
+                        ProjectData.vocalStrips.add("Cho8");
+                        break;
+                    case 9:
+                        ProjectData.vocalStrips.add("Cho1");
+                        ProjectData.vocalStrips.add("Cho2");
+                        ProjectData.vocalStrips.add("Cho3");
+                        ProjectData.vocalStrips.add("Cho4");
+                        ProjectData.vocalStrips.add("Cho5");
+                        ProjectData.vocalStrips.add("Cho6");
+                        ProjectData.vocalStrips.add("Cho7");
+                        ProjectData.vocalStrips.add("Cho8");
+                        ProjectData.vocalStrips.add("Cho9");
+                        break;
+                    case 10:
+                        ProjectData.vocalStrips.add("Cho1");
+                        ProjectData.vocalStrips.add("Cho2");
+                        ProjectData.vocalStrips.add("Cho3");
+                        ProjectData.vocalStrips.add("Cho4");
+                        ProjectData.vocalStrips.add("Cho5");
+                        ProjectData.vocalStrips.add("Cho6");
+                        ProjectData.vocalStrips.add("Cho7");
+                        ProjectData.vocalStrips.add("Cho8");
+                        ProjectData.vocalStrips.add("Cho9");
+                        ProjectData.vocalStrips.add("Cr10");
+                        break;
+                }
+                theseChannelsLabel.setText("These Channels: " + ProjectData.vocalStrips.size());
+                DefineInstruments.buttonVocals.setText("Vocals" + ProjectData.vocalStrips.size());
             }
         });
 //Button apply end
-
-
-//Button back start
-        buttonBack.setBounds(100, 360, 100, 40);
-        buttonBack.setBorderPainted(true);
-        buttonBack.setBackground(Color.orange);
-        container.add(buttonBack);
-
-        buttonBack.addActionListener(new ActionListener() {
+//button no one
+        buttonNoOne.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                terminateThisWindow();
-
-            }
-        });
-//Button back end
-
-//Button next start
-        buttonNext.setBounds(640, 360, 100, 40);
-        buttonNext.setBorderPainted(true);
-        buttonNext.setBackground(Color.orange);
-        container.add(buttonNext);
-        buttonNext.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                DefineInstruments.buttonVocals.setText("Vocals:" + (ProjectData.leadVocStrips.size() + ProjectData.backVocStrips.size()));
-                DefineInstruments.numChannels.setText("All Channels:" + ProjectData.commonChannels());
-                terminateThisWindow();
-            }
-
-        });
-//Button next end
-
-
-
-        this.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                super.windowClosing(e);
-                int option = JOptionPane.showConfirmDialog(null,
-                        "Are you really want to quit?", "Confirm", JOptionPane.YES_NO_OPTION,
-                        JOptionPane.QUESTION_MESSAGE);
-                if (option == JOptionPane.YES_OPTION) {
-                    System.exit(0);
-                }else if (option == JOptionPane.NO_OPTION){
-                    Vocals percussion = new Vocals();
-                    percussion.setVisible(true);
-                }
+                leadVocNumber.setSelectedItem(0);
+                backVocNumber.setSelectedItem(0);
+                choirNumber.setSelectedItem(0);
             }
         });
     }
-    @Override
-    public void itemStateChanged(ItemEvent e) {
-        buttonNext.setEnabled(false);
-    }
-
 }
 
