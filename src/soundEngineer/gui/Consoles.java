@@ -1,5 +1,7 @@
 package soundEngineer.gui;
 
+import soundEngineer.server.IDRtoExcel;
+import soundEngineer.server.RIOtoExcel;
 import soundEngineer.server.ProjectData;
 
 import javax.imageio.ImageIO;
@@ -50,7 +52,6 @@ public class Consoles extends JFrame {
     private JRadioButton x32Mon = new JRadioButton("X32");
 
     private void setFohName(){
-        //selectedFohConsole = "3";
         switch (selectedFohConsole){
             case "2":
                 ProjectData.fohConsoleName = "PM5D";
@@ -311,8 +312,22 @@ public class Consoles extends JFrame {
         container.add(buttonNext);
         buttonNext.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-
+            public void actionPerformed (ActionEvent e) {
+                if (fohGroup.getSelection().getActionCommand() == "4" || fohGroup.getSelection().getActionCommand() == "5") {
+                    RIOtoExcel rioToExcel = new RIOtoExcel();
+                    try {
+                        rioToExcel.inputlistRIOtoExel();
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                }else if (fohGroup.getSelection().getActionCommand() == "3"){
+                    IDRtoExcel idrToExcel = new IDRtoExcel();
+                    try {
+                        idrToExcel.inputlistIDRtoExel();
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                }
             }
         });
 //button next end
@@ -327,14 +342,10 @@ public class Consoles extends JFrame {
         buttonBack.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //DefineInstruments defineInstruments = new DefineInstruments();
                 ProjectData.defineInstruments.setVisible(true);
-                //ProjectData.defineInstruments.revalidate();
                 terminateThisWindow();
-
             }
         });
 //Button back end
          }
-
 }

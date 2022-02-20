@@ -1,19 +1,15 @@
 package soundEngineer.server;
 
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFFont;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.*;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-public class Excel {
+public class RIOtoExcel {
     HSSFWorkbook book = new HSSFWorkbook();
     HSSFSheet sheet = book.createSheet("Input list");
-
     private static HSSFCellStyle createStyleForTitle(HSSFWorkbook book) {
         HSSFFont font = book.createFont();
         font.setBold(true);
@@ -113,12 +109,12 @@ public class Excel {
     }
 
     //create input list start
-    /*private void createHeader(int rowNum) {
-        HSSFWorkbook book = this.book;
+    private void createHeader(int rowNum) {
+        //HSSFWorkbook book = this.book;
 
         Row row;
         Cell cell;
-        HSSFSheet sheet = this.sheet;
+        //HSSFSheet sheet = this.sheet;
 
         row = sheet.createRow(rowNum);
         row.setHeight((short) 550);
@@ -147,29 +143,26 @@ public class Excel {
         //return row;
     }
 
-     public void inputlistToExel() throws IOException {
-         ChannelNames channelNames = new ChannelNames();
-         PickupMap pickupMap = new PickupMap();
+     public void inputlistRIOtoExel() throws IOException {
 
-         HSSFWorkbook book = this.book;
-         HSSFSheet sheet = this.sheet;
+         Sheet sheet = this.sheet;
          sheet.setHorizontallyCenter(true);
 
          int rowNum = 0;
          int channelNum = 0;
-         int rionum = 1;
-         int riochan = 1;
+         int rioNum = 1;
+         int rioChan = 1;
          Cell cell;
          Row row;
 
          createHeader(rowNum);
 
          //data
-         for (; channelNum + 1 < GenericMixer.inputStrips.size();){
+         for (; channelNum + 1 < ProjectData.inputStrips.size();){
              rowNum++;
              channelNum++;
              row = sheet.createRow(rowNum);
-             boolean isBottom = channelNum == GenericMixer.inputStrips.size()-1;
+             boolean isBottom = channelNum == ProjectData.inputStrips.size()-1;
 
              //ch
              cell = row.createCell(0, CellType.STRING);
@@ -183,30 +176,29 @@ public class Excel {
              if (isBottom){
                  cell.setCellStyle(createStyleForBottomData(book));
              }else cell.setCellStyle(createStyleForData(book));
-             cell.setCellValue(rionum + "-" + riochan);
+             cell.setCellValue(rioNum + "-" + rioChan);
              if (channelNum == 32 || channelNum == 64 || channelNum == 96){
                  rowNum++;
                  createHeader(rowNum);
-                 rionum++;
-                 riochan = 0;
+                 rioNum++;
+                 rioChan = 0;
              }
-             riochan++;
+             rioChan++;
 
              //instrument
              cell = row.createCell(2,CellType.STRING);
              if (isBottom){
                  cell.setCellStyle(createStyleForBottomData(book));
              }else cell.setCellStyle(createStyleForData(book));
-             String channelShortName = GenericMixer.inputStrips.get(channelNum);
-             cell.setCellValue(ChannelNames.channelNames.get(channelShortName));
+             String channelShortName = ProjectData.inputStrips.get(channelNum);
+             cell.setCellValue(NamesAndPickup.getChannelFullName(channelShortName));
 
              //pickup
              cell = row.createCell(3, CellType.STRING);
              if (isBottom){
                  cell.setCellStyle(createStyleForBottomData(book));
              }else cell.setCellStyle(createStyleForData(book));
-             String pickupWhat = GenericMixer.inputStrips.get(channelNum);
-             cell.setCellValue(PickupMap.inputPickup.get(pickupWhat));
+             cell.setCellValue(NamesAndPickup.getChannelPickup(channelShortName));
 
              //note
              cell = row.createCell(4, CellType.STRING);
@@ -215,13 +207,13 @@ public class Excel {
              }else cell.setCellStyle(createStyleForRightData(book));
              cell.setBlank();
          }
-    File file1 = new File("D:/demo/Input List.xls");
+    File file1 = new File("D:/demo/InputListRIO.xls");
         file1.getParentFile().mkdirs();
 
     FileOutputStream outFile = new FileOutputStream(file1);
         book.write(outFile);
         outFile.close();
-}*/
+}
 
 }
 

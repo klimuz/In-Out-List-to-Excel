@@ -7,7 +7,7 @@ import java.util.Arrays;
 
 public class ProjectData {
     public static String projectName;
-    public static ArrayList<String> drumStrips = new ArrayList<>(Arrays.asList("Kick", "Sn1T", "Sn1B", "Sn2",
+    public static ArrayList<String> drumStrips = new ArrayList<>(Arrays.asList("Kick", "SD T", "SD B",
             "Hat", "Tom1", "Tom2", "FTom", "OH1", "OH2"));
     public static ArrayList<String> guitarStrips = new ArrayList<>(Arrays.asList("Bass", "EGtr", "AGtr"));
     public static ArrayList<String> synthStrips = new ArrayList<>(Arrays.asList("Sy1L", "Sy1R"));
@@ -70,7 +70,40 @@ public static void createObjects() {
         inputStrips.addAll(worldWideStrips);
         inputStrips.addAll(vocalStrips);
         inputStrips.addAll(extraStrips);
-        //inputStrips.addAll(omniStrips);
+//solve odd-even for stereo
+        if (inputStrips.contains("BasL") && (inputStrips.indexOf("BasL")%2 == 0)){//"BasL"
+            if (inputStrips.size() < 32){
+                inputStrips.add(inputStrips.indexOf("BasL"), "Extr");
+            }else if (worldWideStrips.size()%2 != 0){
+                inputStrips.removeAll(worldWideStrips);
+                inputStrips.addAll(inputStrips.indexOf("BasL"), worldWideStrips);
+            }else if (percussionStrips.size()%2 != 0){
+                inputStrips.removeAll(percussionStrips);
+                inputStrips.addAll(inputStrips.indexOf("BasL"), percussionStrips);
+            }else if (inputStrips.contains("EGtr")){
+                inputStrips.remove("EGtr");
+                inputStrips.add(inputStrips.indexOf("BasL"), "EGtr");
+            }else if (inputStrips.contains("AGt1")){
+                inputStrips.remove("AGt1");
+                inputStrips.add(inputStrips.indexOf("BasL"), "AGt1");
+            }else if (inputStrips.contains("Syn1")){
+                inputStrips.remove("Syn1");
+                inputStrips.add(inputStrips.indexOf("BasL"), "Syn1");
+            }
+        }
+        if (inputStrips.contains("EGtL") && (inputStrips.indexOf("EGtL")%2 == 0)){//"EGtL"
+            if (inputStrips.contains("AGtr")){
+                inputStrips.remove("AGtr");
+                inputStrips.add(inputStrips.indexOf("EGtL"), "AGtr");
+            }else if (inputStrips.contains("AGt1")){
+                inputStrips.remove("AGt1");
+                inputStrips.add(inputStrips.indexOf("EGtL"), "AGt1");
+            }else if (inputStrips.contains("Syn1")){
+                inputStrips.remove("Syn1");
+                inputStrips.add(inputStrips.indexOf("EGtL"), "Syn1");
+            }
+        }
+//preferred console
         if (inputStrips.size() - 1 <= 32) {
             fohConsoleName = "X32";
         }else  if (inputStrips.size() - 1 <= 64) {
