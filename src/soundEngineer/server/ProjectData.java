@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class ProjectData {
-    public static String projectName;
+    public static String projectName = "No name";
     public static ArrayList<String> drumStrips = new ArrayList<>(Arrays.asList("Kick", "SD T", "SD B",
             "Hat", "Tom1", "Tom2", "FTom", "OH1", "OH2"));
     public static ArrayList<String> guitarStrips = new ArrayList<>(Arrays.asList("Bass", "EGtr", "AGtr"));
@@ -16,14 +16,14 @@ public class ProjectData {
     public static ArrayList<String> windStrips = new ArrayList();
     public static ArrayList<String> vocalStrips = new ArrayList();
     public static ArrayList<String> omniStrips = new ArrayList();
-    public static ArrayList<String> extraStrips = new ArrayList();
+    public static ArrayList<String> extraStrips = new ArrayList<>(Arrays.asList("Hst1", "Hst2", "Hst3", "Hst4"));
     public static ArrayList<String> uzbekStrips = new ArrayList();
     public static ArrayList<String> worldWideStrips = new ArrayList();
 
     public static ArrayList<String> inputStrips = new ArrayList();
     public static ArrayList<String> outStrips = new ArrayList<>(Arrays.asList("Ramp", "SF",
             "Dr", "Keys", "Gtr", "Per", "FF", "Sub", "FohL", "FohR"));
-    public static String fohConsoleName;
+    public static String fohConsoleName = "PM5D";
     public static String monConsoleName;
 
     public static AcousticDrumsGUI acousticDrumsGUI;
@@ -60,6 +60,7 @@ public static void createObjects() {
 }
     public static void populateInputs(){
         inputStrips.clear();
+        //inputStrips.add(0,fohConsoleName);
         inputStrips.addAll(drumStrips);
         inputStrips.addAll(guitarStrips);
         inputStrips.addAll(synthStrips);

@@ -1,5 +1,6 @@
 package soundEngineer.gui;
 
+import soundEngineer.consolesGUI.Pm5d;
 import soundEngineer.server.IDRtoExcel;
 import soundEngineer.server.RIOtoExcel;
 import soundEngineer.server.ProjectData;
@@ -313,7 +314,9 @@ public class Consoles extends JFrame {
         buttonNext.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed (ActionEvent e) {
-                if (fohGroup.getSelection().getActionCommand() == "4" || fohGroup.getSelection().getActionCommand() == "5") {
+                Pm5d pm5d = new Pm5d();
+                pm5d.setVisible(true);
+/*               if (fohGroup.getSelection().getActionCommand() == "4" || fohGroup.getSelection().getActionCommand() == "5") {
                     RIOtoExcel rioToExcel = new RIOtoExcel();
                     try {
                         rioToExcel.inputlistRIOtoExel();
@@ -327,7 +330,7 @@ public class Consoles extends JFrame {
                     } catch (IOException ex) {
                         ex.printStackTrace();
                     }
-                }
+                }*/
             }
         });
 //button next end
