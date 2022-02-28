@@ -71,7 +71,8 @@ public static void createObjects() {
         inputStrips.addAll(vocalStrips);
         inputStrips.addAll(extraStrips);
 //solve odd-even for stereo
-        if (inputStrips.contains("BasL") && (inputStrips.indexOf("BasL")%2 == 0)){//"BasL"
+//bass
+        if (inputStrips.contains("BasL") && (inputStrips.indexOf("BasL")%2 == 0)){
             if (inputStrips.size() < 32){
                 inputStrips.add(inputStrips.indexOf("BasL"), "Extr");
             }else if (worldWideStrips.size()%2 != 0){
@@ -80,27 +81,72 @@ public static void createObjects() {
             }else if (percussionStrips.size()%2 != 0){
                 inputStrips.removeAll(percussionStrips);
                 inputStrips.addAll(inputStrips.indexOf("BasL"), percussionStrips);
+            }else if (uzbekStrips.size()%2 != 0){
+                inputStrips.removeAll(uzbekStrips);
+                inputStrips.addAll(inputStrips.indexOf("BasL"), uzbekStrips);
             }else if (inputStrips.contains("EGtr")){
                 inputStrips.remove("EGtr");
                 inputStrips.add(inputStrips.indexOf("BasL"), "EGtr");
-            }else if (inputStrips.contains("AGt1")){
-                inputStrips.remove("AGt1");
-                inputStrips.add(inputStrips.indexOf("BasL"), "AGt1");
+            }else if (inputStrips.contains("EGt1")){
+                inputStrips.remove("EGt1");
+                inputStrips.add(inputStrips.indexOf("BasL"), "EGt1");
+            }else if (inputStrips.contains("EGt2")){
+                inputStrips.remove("EGt2");
+                inputStrips.add(inputStrips.indexOf("BasL"), "EGt2");
+            }else if (inputStrips.contains("EGt3")){
+                inputStrips.remove("EGt3");
+                inputStrips.add(inputStrips.indexOf("BasL"), "EGt3");
+            }else if (inputStrips.contains("Synt")){
+                inputStrips.remove("Synt");
+                inputStrips.add(inputStrips.indexOf("BasL"), "Synt");
             }else if (inputStrips.contains("Syn1")){
                 inputStrips.remove("Syn1");
                 inputStrips.add(inputStrips.indexOf("BasL"), "Syn1");
+            }else if (inputStrips.contains("Syn2")){
+                inputStrips.remove("Syn2");
+                inputStrips.add(inputStrips.indexOf("BasL"), "Syn2");
+            }else if (inputStrips.contains("Syn3")){
+                inputStrips.remove("Syn3");
+                inputStrips.add(inputStrips.indexOf("BasL"), "Syn3");
             }
         }
-        if (inputStrips.contains("EGtL") && (inputStrips.indexOf("EGtL")%2 == 0)){//"EGtL"
-            if (inputStrips.contains("AGtr")){
-                inputStrips.remove("AGtr");
-                inputStrips.add(inputStrips.indexOf("EGtL"), "AGtr");
-            }else if (inputStrips.contains("AGt1")){
-                inputStrips.remove("AGt1");
-                inputStrips.add(inputStrips.indexOf("EGtL"), "AGt1");
-            }else if (inputStrips.contains("Syn1")){
+//EGtL
+        if (inputStrips.contains("EGtL") && (inputStrips.indexOf("EGtL")%2 == 0)) {
+            if (inputStrips.size() < 32) {
+                inputStrips.add(inputStrips.indexOf("EGtL"), "Extr");
+            } else if (worldWideStrips.size() % 2 != 0) {
+                inputStrips.removeAll(worldWideStrips);
+                inputStrips.addAll(inputStrips.indexOf("EGtL"), worldWideStrips);
+            } else if (percussionStrips.size() % 2 != 0) {
+                inputStrips.removeAll(percussionStrips);
+                inputStrips.addAll(inputStrips.indexOf("EGtL"), percussionStrips);
+            } else if (uzbekStrips.size() % 2 != 0) {
+                inputStrips.removeAll(uzbekStrips);
+                inputStrips.addAll(inputStrips.indexOf("EGtL"), uzbekStrips);
+            } else if (inputStrips.contains("EGtr")) {
+                inputStrips.remove("EGtr");
+                inputStrips.add(inputStrips.indexOf("EGtR") + 1, "EGtr");
+            } else if (inputStrips.contains("EGt1")) {
+                inputStrips.remove("EGt1");
+                inputStrips.add(inputStrips.indexOf("EGtL"), "EGt1");
+            } else if (inputStrips.contains("EGt2")) {
+                inputStrips.remove("EGt2");
+                inputStrips.add(inputStrips.indexOf("EGtL"), "EGt2");
+            } else if (inputStrips.contains("EGt3")) {
+                inputStrips.remove("EGt3");
+                inputStrips.add(inputStrips.indexOf("EGtL"), "EGt3");
+            } else if (inputStrips.contains("Synt")) {
+                inputStrips.remove("Synt");
+                inputStrips.add(inputStrips.indexOf("EGtL"), "Synt");
+            } else if (inputStrips.contains("Syn1")) {
                 inputStrips.remove("Syn1");
                 inputStrips.add(inputStrips.indexOf("EGtL"), "Syn1");
+            } else if (inputStrips.contains("Syn2")) {
+                inputStrips.remove("Syn2");
+                inputStrips.add(inputStrips.indexOf("EGtL"), "Syn2");
+            } else if (inputStrips.contains("Syn3")) {
+                inputStrips.remove("Syn3");
+                inputStrips.add(inputStrips.indexOf("EGtL"), "Syn3");
             }
         }
 //preferred console

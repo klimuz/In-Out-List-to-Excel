@@ -62,8 +62,8 @@ public class GUIStamp extends JFrame implements ItemListener{
         jMenuBar.setBackground(Color.green);
         this.setJMenuBar(jMenuBar);
         this.revalidate();
-        //menu end
-        //background image start
+//menu end
+//background image start
         try {
             Image backgroundImage = ImageIO.read(new File(imageFilePath));
             setContentPane(new JPanel(new BorderLayout()) {
@@ -138,7 +138,7 @@ public class GUIStamp extends JFrame implements ItemListener{
 //buttons&labels end
     }
 
-
+//if settings changed
     @Override
     public void itemStateChanged(ItemEvent e) {
         buttonNext.setEnabled(false);
