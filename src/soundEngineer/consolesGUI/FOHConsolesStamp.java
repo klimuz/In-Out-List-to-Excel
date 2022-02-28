@@ -95,13 +95,34 @@ public class FOHConsolesStamp extends JFrame implements ItemListener {
         mainContainer = this.getContentPane();
         mainContainer.setLayout(null);
 //labels
-
     }
 //constructor end
 //class input strip
     private class InputStrip{
+        private int id = 0;
+        private String name = "";
         private JButton editButton = new JButton("E");
         private JLabel nameLabel = new JLabel("");
+        private JLabel numberLabel;
+        private JRadioButton from;
+        private JRadioButton to;
+        private Container container = new Container();
+
+        public InputStrip(int id, String name){
+            this.id = id;
+            this.name=name;
+
+            container.setLayout(new GridLayout(5, 1, 1, 2));
+            container.add(to);
+            container.add(from);
+            container.add(numberLabel);
+            container.add(nameLabel);
+            container.add(editButton);
+
+            nameLabel.setText(name);
+            numberLabel.setText("" + id);
+
+        }
 }
 //if settings changed
     @Override
