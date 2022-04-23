@@ -142,9 +142,7 @@ public class FOHConsolesStampScroll extends JFrame implements ItemListener {
                         stripsIdFrom.clear();
                         moveWhatText.setText("");
                         moveToText.setText("0");
-                        createMatrix();
-
-                   // }
+                    createNewMatrix();
                 }
                 setInfo();
             }
@@ -185,7 +183,6 @@ public class FOHConsolesStampScroll extends JFrame implements ItemListener {
     }
 //constructor end
 
-//create 1st page
     protected void createMatrix() {
         stripsContainer = new Container();
         stripsContainer.setLayout(new FlowLayout());
@@ -198,14 +195,28 @@ public class FOHConsolesStampScroll extends JFrame implements ItemListener {
             stripsContainer.add(strips.get(i));
             groupTo.add(strips.get(i).to);
         }
-        stripsContainer.revalidate();
-
     jScrollPane = new JScrollPane(stripsContainer);
     jScrollPane.setBounds(40,5,770, 190);
     mainContainer.add(jScrollPane);
-    mainContainer.revalidate();
+    }
+    protected void createNewMatrix() {
+        stripsContainer = new Container();
+        stripsContainer.setLayout(new FlowLayout());
 
-}
+        strips.clear();
+        for (int i = 0; i < channelNamesMemory.size(); i++ ){
+            strips.add(i, new InputStrip(i, channelNamesMemory.get(i)));
+        }
+        for (int i = 1; i < strips.size(); i++){
+            stripsContainer.add(strips.get(i));
+            groupTo.add(strips.get(i).to);
+        }
+        mainContainer.remove(jScrollPane);
+        jScrollPane = new JScrollPane(stripsContainer);
+        jScrollPane.setBounds(40,5,770, 190);
+        mainContainer.add(jScrollPane);
+    }
+
 protected void setInfo(){
     String project = "Project : " + ProjectData.projectName + "\n";
     String function = "Function : FOH\n";
