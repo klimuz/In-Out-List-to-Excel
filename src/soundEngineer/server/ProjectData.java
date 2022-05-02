@@ -1,6 +1,7 @@
 package soundEngineer.server;
 
-import soundEngineer.gui.*;
+import soundEngineer.step2.NormaliseListsGui;
+import soundEngineer.step1.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,7 +16,7 @@ public class ProjectData {
     public static ArrayList<String> stringedStrips = new ArrayList();
     public static ArrayList<String> windStrips = new ArrayList();
     public static ArrayList<String> vocalStrips = new ArrayList();
-    public static ArrayList<String> omniStrips = new ArrayList();
+    public static ArrayList<String> omniStrips = new ArrayList<>(Arrays.asList("DJ L", "DJ R", "SCRL", "SCRR" ));
     public static ArrayList<String> extraStrips = new ArrayList<>(Arrays.asList("Hst1", "Hst2", "Hst3", "Hst4"));
     public static ArrayList<String> uzbekStrips = new ArrayList();
     public static ArrayList<String> worldWideStrips = new ArrayList();
@@ -37,7 +38,9 @@ public class ProjectData {
     public static Vocals vocals;
     public static WoodsBrass woodsBrass;
     public static WorldWideGui worldWideGui;
+    public static NormaliseListsGui normaliseListsGui;
 
+    public static String filePath = "";
 
     public static Integer commonChannels() {
         int sumChan = (drumStrips.size() + guitarStrips.size() + synthStrips.size() + percussionStrips.size()
@@ -57,10 +60,10 @@ public static void createObjects() {
     vocals = new Vocals();
     woodsBrass = new WoodsBrass();
     worldWideGui = new WorldWideGui();
+    normaliseListsGui = new NormaliseListsGui("inputs");
 }
-    public static void populateInputs(){
+    public static void populateChannels(){
         inputStrips.clear();
-        //inputStrips.add(0,fohConsoleName);
         inputStrips.addAll(drumStrips);
         inputStrips.addAll(guitarStrips);
         inputStrips.addAll(synthStrips);

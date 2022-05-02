@@ -1,0 +1,62 @@
+//Woods-brass
+//Trumpet
+                    {"Trum", "Trumpet", "", ""},
+                    {"Tru1", "Trumpet1", "", ""},
+                    {"Tru2", "Trumpet2", "", ""},
+                    {"Tru3", "Trumpet3", "", ""},
+                    {"Tru4", "Trumpet4", "", ""},
+//Trombone
+                    {"Trom", "Trombone", "", ""},
+                    {"Tro1", "Trombone1", "", ""},
+                    {"Tro2", "Trombone2", "", ""},
+                    {"Tro3", "Trombone3", "", ""},
+                    {"Tro4", "Trombone4", "", ""},
+//Sax
+                    {"Sax", "Sax", "", ""},
+                    {"Sax1", "Sax1", "", ""},
+                    {"Sax2", "Sax2", "", ""},
+                    {"Sax3", "Sax3", "", ""},
+                    {"Sax4", "Sax4", "", ""},
+//Tuba
+                    {"Tuba", "Tuba", "", ""},
+                    {"Tub1", "Tuba1", "", ""},
+                    {"Tub2", "Tuba2", "", ""},
+                    {"Tub3", "Tuba3", "", ""},
+                    {"Tub4", "Tuba4", "", ""},
+//Horn
+                    {"Horn", "Horn", "DPA", ""},
+                    {"Hor1", "Horn1", "DPA", ""},
+                    {"Hor2", "Horn2", "DPA", ""},
+                    {"Hor3", "Horn3", "DPA", ""},
+                    {"Hor4", "Horn4", "DPA", ""},
+//Flute
+                    {"Flut", "Flute", "DPA", ""},
+                    {"Flu1", "Flute1", "DPA", ""},
+                    {"Flu2", "Flute2", "DPA", ""},
+                    {"Flu3", "Flute3", "DPA", ""},
+                    {"Flu4", "Flute4", "DPA", ""},
+//Clarinet
+                    {"Clar", "Clarinet", "Cond", ""},
+                    {"Cla1", "Clarinet1", "Cond", ""},
+                    {"Cla2", "Clarinet2", "Cond", ""},
+                    {"Cla3", "Clarinet3", "Cond", ""},
+                    {"Cla4", "Clarinet4", "Cond", ""},
+//Oboe
+                    {"Oboe", "Oboe", "DPA", ""},
+                    {"Obo1", "Oboe1", "DPA", ""},
+                    {"Obo2", "Oboe2", "DPA", ""},
+                    {"Obo3", "Oboe3", "DPA", ""},
+                    {"Obo4", "Oboe4", "DPA", ""},
+//Bassoon
+                    {"Bsn", "Bassoon", "DPA", ""},
+                    {"Bsn1", "Bassoon1", "DPA", ""},
+                    {"Bsn2", "Bassoon2", "DPA", ""},
+                    {"Bsn3", "Bassoon3", "DPA", ""},
+                    {"Bsn4", "Bassoon4", "DPA", ""},
+//Wood-Brass
+                    {"Wind", "Wood or Brass", "", ""},
+                    {"Win1", "Wood or Brass1", "", ""},
+                    {"Win2", "Wood or Brass2", "", ""},
+                    {"Win3", "Wood or Brass3", "", ""},
+                    {"Win4", "Wood or Brass4", "", ""},
+                    {"Win5", "Wood or Brass5", "", ""},

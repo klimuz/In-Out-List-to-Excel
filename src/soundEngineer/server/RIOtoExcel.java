@@ -6,6 +6,7 @@ import org.apache.poi.ss.usermodel.*;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class RIOtoExcel {
     HSSFWorkbook book = new HSSFWorkbook();
@@ -143,7 +144,7 @@ public class RIOtoExcel {
         //return row;
     }
 
-     public void inputlistRIOtoExel() throws IOException {
+     public void inputListRIOtoExel(ArrayList inputList) throws IOException {
 
          Sheet sheet = this.sheet;
          sheet.setHorizontallyCenter(true);
@@ -154,15 +155,13 @@ public class RIOtoExcel {
          int rioChan = 1;
          Cell cell;
          Row row;
-
          createHeader(rowNum);
-
          //data
-         for (; channelNum + 1 < ProjectData.inputStrips.size();){
+         for (; channelNum + 1 < inputList.size();){
              rowNum++;
              channelNum++;
              row = sheet.createRow(rowNum);
-             boolean isBottom = channelNum == ProjectData.inputStrips.size()-1;
+             boolean isBottom = channelNum ==  inputList.size()-1;
 
              //ch
              cell = row.createCell(0, CellType.STRING);
@@ -184,13 +183,12 @@ public class RIOtoExcel {
                  rioChan = 0;
              }
              rioChan++;
-
-             //instrument
+//instrument
              cell = row.createCell(2,CellType.STRING);
              if (isBottom){
                  cell.setCellStyle(createStyleForBottomData(book));
              }else cell.setCellStyle(createStyleForData(book));
-             String channelShortName = ProjectData.inputStrips.get(channelNum);
+             String channelShortName = (String) inputList.get(channelNum);
              cell.setCellValue(NamesAndPickup.getChannelFullName(channelShortName));
 
              //pickup
@@ -207,7 +205,7 @@ public class RIOtoExcel {
              }else cell.setCellStyle(createStyleForRightData(book));
              cell.setBlank();
          }
-    File file1 = new File("D:/demo/InputListRIO.xls");
+    File file1 = new File(ProjectData.filePath + "/" + ProjectData.projectName + " RIO-In-out list.xls");
         file1.getParentFile().mkdirs();
 
     FileOutputStream outFile = new FileOutputStream(file1);
