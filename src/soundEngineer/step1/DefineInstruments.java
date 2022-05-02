@@ -18,7 +18,7 @@ public class DefineInstruments extends JFrame{
     JMenu m2 = new JMenu("Help");
     public static JButton buttonDrums =new JButton("Drums" + ProjectData.drumStrips.size());
     public static JButton buttonGuitars =new JButton("Guitars" + ProjectData.guitarStrips.size());
-    public static JButton buttonSynths =new JButton("Synths" + ProjectData.synthStrips.size());
+    public static JButton buttonSynths =new JButton("Keys" + ProjectData.keyboardStrips.size());
     public static JButton buttonPercuss =new JButton("Percussion" + ProjectData.percussionStrips.size());
     public static JButton buttonStrings =new JButton("Strings" + ProjectData.stringedStrips.size());
     public static JButton buttonWinds =new JButton("Winds" + ProjectData.windStrips.size());
@@ -34,6 +34,7 @@ public class DefineInstruments extends JFrame{
     private JLabel define = new JLabel("Define instruments:");
     public static JLabel numChannels = new JLabel("All Channels:" + ProjectData.commonChannels());
     public static JLabel omniChannels = new JLabel("Omni Channels:" + ProjectData.omniStrips.size());
+    public static NormaliseListsGui normaliseListsGui = new NormaliseListsGui("in");
     public void terminateThisWindow(){
         this.dispose();
     }
@@ -212,8 +213,8 @@ public class DefineInstruments extends JFrame{
                 buttonDrums.setText("Drums" + ProjectData.drumStrips.size());
                 ProjectData.guitarStrips.clear();
                 buttonGuitars.setText("Guitars" + ProjectData.guitarStrips.size());
-                ProjectData.synthStrips.clear();
-                buttonSynths.setText("Synths" + ProjectData.synthStrips.size());
+                ProjectData.keyboardStrips.clear();
+                buttonSynths.setText("Synths" + ProjectData.keyboardStrips.size());
                 ProjectData.percussionStrips.clear();
                 buttonPercuss.setText("Percussion" + ProjectData.percussionStrips.size());
                 ProjectData.stringedStrips.clear();

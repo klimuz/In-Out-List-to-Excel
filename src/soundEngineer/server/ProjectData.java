@@ -11,7 +11,7 @@ public class ProjectData {
     public static ArrayList<String> drumStrips = new ArrayList<>(Arrays.asList("Kick", "SD T", "SD B",
             "Hat", "Tom1", "Tom2", "FTom", "OH1", "OH2"));
     public static ArrayList<String> guitarStrips = new ArrayList<>(Arrays.asList("Bass", "EGtr", "AGtr"));
-    public static ArrayList<String> synthStrips = new ArrayList<>(Arrays.asList("Sy1L", "Sy1R"));
+    public static ArrayList<String> keyboardStrips = new ArrayList<>(Arrays.asList("Sy1L", "Sy1R"));
     public static ArrayList<String> percussionStrips = new ArrayList();
     public static ArrayList<String> stringedStrips = new ArrayList();
     public static ArrayList<String> windStrips = new ArrayList();
@@ -43,7 +43,7 @@ public class ProjectData {
     public static String filePath = "";
 
     public static Integer commonChannels() {
-        int sumChan = (drumStrips.size() + guitarStrips.size() + synthStrips.size() + percussionStrips.size()
+        int sumChan = (drumStrips.size() + guitarStrips.size() + keyboardStrips.size() + percussionStrips.size()
                 + stringedStrips.size() + windStrips.size() + vocalStrips.size() + extraStrips.size()
                 + uzbekStrips.size() + worldWideStrips.size());
         return sumChan;
@@ -60,13 +60,13 @@ public static void createObjects() {
     vocals = new Vocals();
     woodsBrass = new WoodsBrass();
     worldWideGui = new WorldWideGui();
-    normaliseListsGui = new NormaliseListsGui("inputs");
+    //normaliseListsGui = new NormaliseListsGui("inputs");
 }
     public static void populateChannels(){
         inputStrips.clear();
         inputStrips.addAll(drumStrips);
         inputStrips.addAll(guitarStrips);
-        inputStrips.addAll(synthStrips);
+        inputStrips.addAll(keyboardStrips);
         inputStrips.addAll(stringedStrips);
         inputStrips.addAll(windStrips);
         inputStrips.addAll(percussionStrips);

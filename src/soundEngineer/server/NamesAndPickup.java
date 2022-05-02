@@ -39,25 +39,32 @@ public class NamesAndPickup {
                     {"Over", "Over head", "Cond", ""},
                     {"OH1", "Over head1", "Cond", ""},
                     {"OH2", "Over head2", "Cond", ""},
+//drum machine
+                    {"ElDr", "Drum machine", "DI", ""},
+                    {"EDrL", "Drum machine L", "DI", "odd"},
+                    {"EDrR", "Drum machine R", "DI", ""},
+                    {"EDr1", "Drum machine1", "DI", ""},
+                    {"EDr2", "Drum machine2", "DI", ""},
+                    {"EDr3", "Drum machine3", "DI", ""},
 //Guitar strips
 //bass
                     {"Bass", "Bass", "DI", ""},
                     {"BasL", "Bass L", "DI", "odd"},
                     {"BasR", "Bass R", "DI", ""},
 //mono eguitars
-                    {"EGtr", "Eletric guitar", "DI", ""},
-                    {"EGt1", "Eletric guitar1", "DI", ""},
-                    {"EGt2", "Eletric guitar2", "DI", ""},
-                    {"EGt3", "Eletric guitar3", "DI", ""},
+                    {"EGtr", "Electric guitar", "DI", ""},
+                    {"EGt1", "Electric guitar1", "DI", ""},
+                    {"EGt2", "Electric guitar2", "DI", ""},
+                    {"EGt3", "Electric guitar3", "DI", ""},
 //stereo eguitars
-                    {"EGtL", "Eletric guitar L", "DI", "odd"},
-                    {"EGtR", "Eletric guitar R", "DI", ""},
-                    {"EG1L", "Eletric guitar1L", "DI", "odd"},
-                    {"EG1R", "Eletric guitar1R", "DI", ""},
-                    {"EG2L", "Eletric guitar2L", "DI", "odd"},
-                    {"EG2R", "Eletric guitar2R", "DI", ""},
-                    {"EG3L", "Eletric guitar3L", "DI", "odd"},
-                    {"EG3R", "Eletric guitar3R", "DI", ""},
+                    {"EGtL", "Electric guitar L", "DI", "odd"},
+                    {"EGtR", "Electric guitar R", "DI", ""},
+                    {"EG1L", "Electric guitar1L", "DI", "odd"},
+                    {"EG1R", "Electric guitar1R", "DI", ""},
+                    {"EG2L", "Electric guitar2L", "DI", "odd"},
+                    {"EG2R", "Electric guitar2R", "DI", ""},
+                    {"EG3L", "Electric guitar3L", "DI", "odd"},
+                    {"EG3R", "Electric guitar3R", "DI", ""},
 //mono aguitars
                     {"AGtr", "Acoustic guitar", "DI", ""},
                     {"AGt1", "Acoustic guitar1", "DI", ""},
@@ -200,6 +207,10 @@ public class NamesAndPickup {
                     {"Jamb", "Jambey", "", ""},
                     {"Jam1", "Jambey1", "", ""},
                     {"Jam2", "Jambey2", "", ""},
+//kajon
+                    {"Kjon", "Kajon", "", ""},
+                    {"Kjn1", "Kajon1", "", ""},
+                    {"Kjn2", "Kajon2", "", ""},
 //other percussion
                     {"Perc", "Percussion", "", ""},
                     {"Per1", "Percussion1", "", ""},
@@ -323,16 +334,12 @@ public class NamesAndPickup {
                     {"Win4", "Wood or Brass4", "", ""},
                     {"Win5", "Wood or Brass5", "", ""},
 //synths and pianos
-//mono
+//mono synth
                     {"Synt", "Synth", "DI", ""},
                     {"Syn1", "Synth1", "DI", ""},
                     {"Syn2", "Synth2", "DI", ""},
                     {"Syn3", "Synth3", "DI", ""},
-                    {"Pno", "Piano", "", ""},
-                    {"PnoH", "Piano Hi", "", ""},
-                    {"PnoL", "Piano Lo", "", ""},
-
-//stereo
+//stereo synth
                     {"SynL", "Synth L", "DI", "odd"},
                     {"SynR", "Synth R", "DI", ""},
                     {"Sy1L", "Synth1L", "DI", "odd"},
@@ -341,6 +348,10 @@ public class NamesAndPickup {
                     {"Sy2R", "Synth2R", "DI", ""},
                     {"Sy3L", "Synth3L", "DI", "odd"},
                     {"Sy3R", "Synth3R", "DI", ""},
+//piano
+                    {"Pno", "Piano", "", ""},
+                    {"PnoH", "Piano Hi", "", ""},
+                    {"PnoL", "Piano Lo", "", ""},
 //uzbek
 //rubob
                     {"Rub", "Rubob", "DPA", ""},

@@ -39,6 +39,12 @@ public class InputStrip extends JPanel implements ItemListener {
         this.add(editButton, new GridBagConstraints(0,0,1,1,1,1,
                 GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL,
                 new Insets(2,2,2,2),0,0));
+        editButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
 
         RotateLabel label = new RotateLabel(stripName);
         this.add(label, new GridBagConstraints(0,1,1,2,1,1,

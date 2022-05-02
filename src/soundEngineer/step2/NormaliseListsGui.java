@@ -328,7 +328,7 @@ public class NormaliseListsGui extends JFrame {
                 createNewMatrix();
             }
         });
-
+//mode buttons
         modeButtonsContainer = new Container();
         modeButtonsContainer.setLayout(new GridLayout(1, 3));
         modeButtonsContainer.setBounds(50,330,220,20);
@@ -414,6 +414,7 @@ public class NormaliseListsGui extends JFrame {
                         ex.printStackTrace();
                     }
                 }
+                //terminateThisWindow();
             }
 
         });

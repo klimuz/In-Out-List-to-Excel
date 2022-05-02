@@ -18,6 +18,7 @@ public class Percussion extends GUIStamp {
     private JLabel tablaLabel = new JLabel("Tabla");
     private JLabel nagoraLabel = new JLabel("Nagora");
     private JLabel jambeyLabel = new JLabel("Jambey");
+    private JLabel kajonLabel = new JLabel("Kajon");
     private JLabel kushNagLabel = new JLabel("KushNagora");
     private JLabel othersLabel = new JLabel("Others");
     private JLabel genericsLabel = new JLabel("Generic:");
@@ -32,6 +33,7 @@ public class Percussion extends GUIStamp {
     private JComboBox<Integer> tablaNumber = new JComboBox();
     private JComboBox<Integer> nagoraNumber = new JComboBox();
     private JComboBox<Integer> jambeyNumber = new JComboBox();
+    private JComboBox<Integer> kajonNumber = new JComboBox();
     private JComboBox<Integer> othersNumber = new JComboBox();
 
     public Percussion() throws HeadlessException {
@@ -194,6 +196,18 @@ public class Percussion extends GUIStamp {
         }
         jambeyNumber.addItemListener(this);
         numbersContainerRight.add(jambeyNumber);
+//kajon
+        labelContainerRight.add(kajonLabel);
+        kajonNumber.addItem(0);
+        kajonNumber.addItem(1);
+        kajonNumber.addItem(2);
+        if (ProjectData.percussionStrips.contains("Kjon")){
+            kajonNumber.setSelectedItem(1);
+        }else if (ProjectData.percussionStrips.contains("Kjn2")){
+            kajonNumber.setSelectedItem(2);
+        }
+        jambeyNumber.addItemListener(this);
+        numbersContainerRight.add(kajonNumber);
 //other percussion
         labelContainerRight.add(othersLabel);
         othersNumber.addItem(0);
@@ -356,6 +370,16 @@ public class Percussion extends GUIStamp {
                     case 2:
                         ProjectData.percussionStrips.add("Jam1");
                         ProjectData.percussionStrips.add("Jam2");
+                        break;
+                }
+//kajon
+                switch ((int) kajonNumber.getSelectedItem()) {
+                    case 1:
+                        ProjectData.percussionStrips.add("Kjon");
+                        break;
+                    case 2:
+                        ProjectData.percussionStrips.add("Kjn1");
+                        ProjectData.percussionStrips.add("Kjn2");
                         break;
                 }
 //other percussion

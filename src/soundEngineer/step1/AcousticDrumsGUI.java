@@ -15,6 +15,7 @@ public class AcousticDrumsGUI extends GUIStamp{
     private JLabel rackTomsLabel = new JLabel("Rack Toms:");
     private JLabel floorTomsLabel = new JLabel("Floor Toms:");
     private JLabel snare2Label = new JLabel("Snare2:");
+    private JLabel drumMachineLabel = new JLabel("Drum Machine:");
 
     private JComboBox<String> kicksNumber = new JComboBox();
     private JComboBox<String> snaresNumber = new JComboBox();
@@ -23,8 +24,9 @@ public class AcousticDrumsGUI extends GUIStamp{
     private JComboBox<String> floorTomsNumber = new JComboBox();
     private JComboBox<String> overNumber = new JComboBox();
     private JComboBox<String> snare2Number = new JComboBox();
+    private JComboBox<String> drumMachNumber = new JComboBox();
     private JCheckBox anyTrigger = new JCheckBox();
-
+//constructor
     public AcousticDrumsGUI() throws HeadlessException {
         super("img/acousticDrums.jpg");
         pageNameLabel.setBounds(100, 5, 300, 50);
@@ -77,7 +79,6 @@ public class AcousticDrumsGUI extends GUIStamp{
         snare2Number.addItem("no one");
         snare2Number.addItem("just top");
         snare2Number.addItem("top+bottom");
-        snare2Number.setEnabled(false);
         if (snaresNumber.getSelectedItem() != "no one") {
             snare2Number.setEnabled(true);
         }
@@ -169,7 +170,30 @@ public class AcousticDrumsGUI extends GUIStamp{
             container.add(overLabel);
             overNumber.setBounds(360, 35, 40, 20);
             container.add(overNumber);
-
+//drum machine
+        drumMachNumber.addItemListener(this);
+        drumMachNumber.addItem("0");
+        drumMachNumber.addItem("1");
+        drumMachNumber.addItem("2");
+        drumMachNumber.addItem("3");
+        drumMachNumber.addItem("stereo");
+        if (!ProjectData.drumStrips.contains("ElDr") && !ProjectData.drumStrips.contains("EDr1") && !ProjectData.drumStrips.contains("EDrL")) {
+            drumMachNumber.setSelectedItem("0");
+        } else if (ProjectData.drumStrips.contains("ElDr")) {
+            drumMachNumber.setSelectedItem("1");
+        } else if (ProjectData.drumStrips.contains("EDr2") && !ProjectData.drumStrips.contains("EDr3")) {
+            drumMachNumber.setSelectedItem("2");
+        } else if (ProjectData.drumStrips.contains("EDr3")) {
+            drumMachNumber.setSelectedItem("3");
+        } else if (ProjectData.drumStrips.contains("EDrL")) {
+            drumMachNumber.setSelectedItem("stereo");
+        }
+        drumMachineLabel.setOpaque(true);
+        drumMachineLabel.setBackground(Color.cyan);
+        drumMachineLabel.setBounds(70, 185, 90, 20);
+        container.add(drumMachineLabel);
+        drumMachNumber.setBounds(80, 210, 70, 20);
+        container.add(drumMachNumber);
 //Button apply start
             buttonApply.addActionListener(new ActionListener() {
                 @Override
@@ -245,6 +269,20 @@ public class AcousticDrumsGUI extends GUIStamp{
                     } else if (overNumber.getSelectedItem() == "2") {
                         ProjectData.drumStrips.add("OH1");
                         ProjectData.drumStrips.add("OH2");
+                    }
+//drum machine
+                    if (drumMachNumber.getSelectedItem() == "1"){
+                        ProjectData.drumStrips.add("ElDr");
+                    }else if (drumMachNumber.getSelectedItem() == "2"){
+                        ProjectData.drumStrips.add("EDr1");
+                        ProjectData.drumStrips.add("EDr2");
+                    }else if (drumMachNumber.getSelectedItem() == "3"){
+                        ProjectData.drumStrips.add("EDr1");
+                        ProjectData.drumStrips.add("EDr2");
+                        ProjectData.drumStrips.add("EDr3");
+                    }else if (drumMachNumber.getSelectedItem() == "stereo"){
+                        ProjectData.drumStrips.add("EDrL");
+                        ProjectData.drumStrips.add("EDrR");
                     }
                     theseChannelsLabel.setText("These Channels: " + ProjectData.drumStrips.size());
                     DefineInstruments.buttonDrums.setText("Drums" + ProjectData.drumStrips.size());
