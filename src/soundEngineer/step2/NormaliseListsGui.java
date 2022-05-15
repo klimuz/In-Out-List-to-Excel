@@ -388,8 +388,7 @@ public class NormaliseListsGui extends JFrame {
         buttonNext.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                OutDirectoryChooser outDirectoryChooser = new OutDirectoryChooser();
-                outDirectoryChooser.setVisible(true);
+                new OutDirectoryChooser();
                 if (genericCheck.isSelected()) {
                     GenericToExcel genericToExcel = new GenericToExcel();
                 try {

@@ -1,10 +1,8 @@
 package soundEngineer.step2;
 
 import soundEngineer.server.ProjectData;
-import soundEngineer.step1.DefineInstruments;
 
 import javax.swing.*;
-import javax.swing.filechooser.FileSystemView;
 
 public class OutDirectoryChooser extends JFrame {
     private JFileChooser fileChooser;
@@ -15,12 +13,15 @@ public class OutDirectoryChooser extends JFrame {
         fileChooser = new JFileChooser(javax.swing.filechooser.FileSystemView.getFileSystemView().getHomeDirectory());
         fileChooser.setDialogTitle("Choose folder");
         fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         int result = fileChooser.showOpenDialog(OutDirectoryChooser.this);
-        if (result == JFileChooser.APPROVE_OPTION ) {
+        if (result == JFileChooser.APPROVE_OPTION) {
             ProjectData.filePath = fileChooser.getSelectedFile().getPath();
             JOptionPane.showMessageDialog(OutDirectoryChooser.this,
                     fileChooser.getSelectedFile());
+            this.setVisible(false);
+        }else {
+            this.setVisible(false);
         }
-        this.dispose();
     }
 }
