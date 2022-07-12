@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
-public class InputStrip extends JPanel implements ItemListener {
+public class channelStrip extends JPanel implements ItemListener {
     private JButton editButton = new JButton("E");
     private JLabel number = new JLabel("");
 
@@ -18,10 +18,14 @@ public class InputStrip extends JPanel implements ItemListener {
     public JRadioButton to = new JRadioButton("T");
 
     private String stripName;
+    private String stripPickup;
+    private String stripNote;
     public boolean toIsSelected = false;
 
-    public InputStrip (int id, String name){
-        this.stripName = name;
+    public channelStrip(int id, String name, String pickup, String note){
+        stripName = name;
+        stripPickup = pickup;
+        stripNote = note;
         this.setOpaque(true);
         this.setBackground(Color.gray);
         if (NamesAndPickup.isOdd(name) && NormaliseListsGui.inputNamesList.indexOf(name)%2 == 0) {// && ListsStamp.channelNamesMemory.indexOf(name)%2 == 0
@@ -42,7 +46,8 @@ public class InputStrip extends JPanel implements ItemListener {
         editButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+            StripEditorGUI stripEditorGUI = new StripEditorGUI(id,stripName,stripPickup,stripNote);
+            stripEditorGUI.setVisible(true);
             }
         });
 
@@ -99,5 +104,8 @@ public class InputStrip extends JPanel implements ItemListener {
        if (to.isSelected() == true){
             toIsSelected = true;
        }
+    }
+    private void editStrip(){
+
     }
 }

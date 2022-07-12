@@ -1,9 +1,6 @@
 package soundEngineer.step2;
 
-import soundEngineer.server.GenericToExcel;
-import soundEngineer.server.IDRtoExcel;
-import soundEngineer.server.ProjectData;
-import soundEngineer.server.RIOtoExcel;
+import soundEngineer.server.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -18,7 +15,7 @@ import java.util.ArrayList;
 
 public class NormaliseListsGui extends JFrame {
 //memory
-    private ArrayList<InputStrip> stripList = new ArrayList<>();
+    private ArrayList<channelStrip> stripList = new ArrayList<>();
     public static ArrayList<String> inputNamesList;
     public static ArrayList<String> omniNamesList;
     public static ArrayList<String> outNamesList;
@@ -226,7 +223,7 @@ public class NormaliseListsGui extends JFrame {
                     idToCopyList.clear();
                     setMoveWhatText("");
                     setMoveToText("0");
-                    createNewMatrix();
+                    recreateMatrix();
                 }
                 setInfo();
             }
@@ -245,7 +242,7 @@ public class NormaliseListsGui extends JFrame {
                         case "omni": omniNamesList.add((Integer.parseInt(getMoveToText())), "");break;
                         case "out": outNamesList.add((Integer.parseInt(getMoveToText())), "");break;
                     }
-                    createNewMatrix();
+                    recreateMatrix();
                 }
                 setInfo();
             }
@@ -258,7 +255,7 @@ public class NormaliseListsGui extends JFrame {
         buttonDelete.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (Integer.parseInt(getMoveToText()) == 0){
+               // if (Integer.parseInt(getMoveToText()) == 0){
                     switch (modeGroup.getSelection().getActionCommand()){
                         case "in":
                             for (int i = 0; i < idToCopyList.size(); i++){
@@ -283,8 +280,8 @@ public class NormaliseListsGui extends JFrame {
                     idToCopyList.clear();
                     setMoveWhatText("");
                     setMoveToText("");
-                    createNewMatrix();
-                }
+                    recreateMatrix();
+               // }
             }
         });
 
@@ -311,7 +308,7 @@ public class NormaliseListsGui extends JFrame {
                 }
                 setMoveWhatText("");
                 setMoveToText("");
-                createNewMatrix();
+                recreateMatrix();
             }
         });
         buttonsContainer.setBounds(60,200,200,120);
@@ -325,7 +322,7 @@ public class NormaliseListsGui extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 moveToText.setText("0");
-                createNewMatrix();
+                recreateMatrix();
             }
         });
 //mode buttons
@@ -350,19 +347,19 @@ public class NormaliseListsGui extends JFrame {
         inputModeRadButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                createNewMatrix();
+                recreateMatrix();
             }
         });
         omniModeRadButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                createNewMatrix();
+                recreateMatrix();
             }
         });
         outModeRadButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                createNewMatrix();
+                recreateMatrix();
             }
         });
 //check boxes
@@ -422,102 +419,59 @@ public class NormaliseListsGui extends JFrame {
         buttonBack.setBorderPainted(true);
         buttonBack.setBackground(Color.orange);
         mainContainer.add(buttonBack);
-
         buttonBack.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 ProjectData.defineInstruments.setVisible(true);
                 terminateThisWindow();
-
             }
         });
         createMatrix();
     }
-
-//matrix creators
+    //matrix creators
     private void createMatrix() {
-    stripsContainer = new Container();
-    stripsContainer.setLayout(new FlowLayout());
-    stripList.clear();
-
-    switch (modeGroup.getSelection().getActionCommand()){
-        case "in":
-            stripsTypeLabel.setText("Input channels");
-            for (int i = 0; i < inputNamesList.size(); i++ ){
-                stripList.add(i, new InputStrip(i, inputNamesList.get(i)));
-            }
-            for (int i = 1; i < stripList.size(); i++){
-                stripsContainer.add(stripList.get(i));
-                groupTo.add(stripList.get(i).to);
-            }
-            break;
-        case "omni":
-            stripsTypeLabel.setText("Omni channels");
-            for (int i = 0; i < omniNamesList.size(); i++ ){
-                stripList.add(i, new InputStrip(i, omniNamesList.get(i)));
-            }
-            for (int i = 1; i < stripList.size(); i++){
-                stripsContainer.add(stripList.get(i));
-                groupTo.add(stripList.get(i).to);
-            }
-            break;
-        case "out":
-            stripsTypeLabel.setText("Out channels");
-            for (int i = 0; i < outNamesList.size(); i++ ){
-                stripList.add(i, new InputStrip(i, outNamesList.get(i)));
-            }
-            for (int i = 1; i < stripList.size(); i++){
-                stripsContainer.add(stripList.get(i));
-                groupTo.add(stripList.get(i).to);
-            }
-            break;
-    }
-    jScrollPane = new JScrollPane(stripsContainer);
-    jScrollPane.setBounds(40,5,770, 190);
-    mainContainer.add(jScrollPane);
-    setInfo();
-}
-    private void createNewMatrix() {
-        stripsContainer = new Container();
         stripsContainer.setLayout(new FlowLayout());
         stripList.clear();
-        switch (modeGroup.getSelection().getActionCommand()){
-            case "in":
-                stripsTypeLabel.setText("Input channels");
-                for (int i = 0; i < inputNamesList.size(); i++ ){
-                    stripList.add(i, new InputStrip(i, inputNamesList.get(i)));
-                }
-                for (int i = 1; i < stripList.size(); i++){
-                    stripsContainer.add(stripList.get(i));
-                    groupTo.add(stripList.get(i).to);
-                }
-                break;
-            case "omni":
-                stripsTypeLabel.setText("Omni channels");
-                for (int i = 0; i < omniNamesList.size(); i++ ){
-                    stripList.add(i, new InputStrip(i, omniNamesList.get(i)));
-                }
-                for (int i = 1; i < stripList.size(); i++){
-                    stripsContainer.add(stripList.get(i));
-                    groupTo.add(stripList.get(i).to);
-                }
-                break;
-            case "out":
-                stripsTypeLabel.setText("Out channels");
-                for (int i = 0; i < outNamesList.size(); i++ ){
-                    stripList.add(i, new InputStrip(i, outNamesList.get(i)));
-                }
-                for (int i = 1; i < stripList.size(); i++){
-                    stripsContainer.add(stripList.get(i));
-                    groupTo.add(stripList.get(i).to);
-                }
-                break;
-        }
-        mainContainer.remove(jScrollPane);
+        fillMatrix();
         jScrollPane = new JScrollPane(stripsContainer);
         jScrollPane.setBounds(40,5,770, 190);
         mainContainer.add(jScrollPane);
         setInfo();
+    }
+    private void recreateMatrix() {
+        stripsContainer.removeAll();
+        stripList.clear();
+        fillMatrix();
+        setInfo();
+    }
+    private void fillMatrix(){
+        switch (modeGroup.getSelection().getActionCommand()){
+            case "in":
+                stripsTypeLabel.setText("Input channels");
+                for (int i = 0; i < ProjectData.inputStrips.size(); i++ ){
+                    stripList.add(i, new channelStrip(i, ProjectData.inputStrips.get(i),
+                            NamesAndPickup.getChannelPickup(ProjectData.inputStrips.get(i)), ""));
+                }
+                break;
+            case "omni":
+                stripsTypeLabel.setText("Omni channels");
+                for (int i = 1; i < ProjectData.omniStrips.size(); i++ ){
+                    stripList.add(i, new channelStrip(i, ProjectData.omniStrips.get(i),
+                            NamesAndPickup.getChannelPickup(ProjectData.omniStrips.get(i)), ""));
+                }
+                break;
+            case "out":
+                stripsTypeLabel.setText("Out channels");
+                for (int i = 1; i < ProjectData.outStrips.size(); i++ ){
+                    stripList.add(i, new channelStrip(i, ProjectData.outStrips.get(i),
+                            NamesAndPickup.getChannelPickup(ProjectData.outStrips.get(i)), ""));
+                }
+                break;
+        }
+        for (int i = 1; i < stripList.size(); i++){
+            stripsContainer.add(stripList.get(i));
+            groupTo.add(stripList.get(i).to);
+        }
     }
     private void setInfo(){
         String project = "Project : " + ProjectData.projectName + "\n";
@@ -528,6 +482,5 @@ public class NormaliseListsGui extends JFrame {
         String omni = "Omni : " + (omniNamesList.size()-1);
         infoTextArea.setText(project + function + console +
                 inputs + outputs + omni);
-
     }
 }

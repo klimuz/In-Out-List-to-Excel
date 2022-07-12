@@ -60,7 +60,6 @@ public static void createObjects() {
     vocals = new Vocals();
     woodsBrass = new WoodsBrass();
     worldWideGui = new WorldWideGui();
-    //normaliseListsGui = new NormaliseListsGui("inputs");
 }
     public static void populateChannels(){
         inputStrips.clear();
